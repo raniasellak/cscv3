@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\BoutiqueController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -27,3 +27,6 @@ Route::get('/admin/dashboard', function () {
 Route::get('/user/index', function () {
     return view('user.index');
 })->name('user.index')->middleware('auth');
+
+Route::get('/boutique', [BoutiqueController::class, 'index'])->name('boutique.index');
+Route::get('/boutique/category/{id}', [BoutiqueController::class, 'showByCategory'])->name('boutique.category');
