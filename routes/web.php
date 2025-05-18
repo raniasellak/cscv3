@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\BoutiqueController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -11,7 +11,17 @@ Route::get('/test-route', function() {
 Route::get('/', function () {
     return view('welcome');
 });
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FormationController;
+use App\Http\Controllers\InscriptionController;
 
+// routes/web.php
+
+use App\Http\Controllers\AttestationController;
+
+Route::get('/attestations/show/{inscription}', [AttestationController::class, 'generate'])->name('attestations.show');
+
+Route::get('/attestations/show/{inscription}', [App\Http\Controllers\AttestationController::class, 'generate'])->name('attestation.show');
 
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
@@ -59,3 +69,18 @@ Route::post('/chatbot', function (\Illuminate\Http\Request $request) {
 Route::get('/accueil', function () {
 return view('accueil');
 })->name('accueil');
+
+// Routes publiques
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+
+
+Route::resource('formations', FormationController::class);
+
+
+Route::post('/formations/{formationId}/quick-register', [InscriptionController::class, 'quickRegister'])->name('inscriptions.quick');
+
+Route::put('/formations/{formation}/presence', [FormationController::class, 'updatePresence'])->name('formations.presence');
+Route::get('/boutique', [BoutiqueController::class, 'index'])->name('boutique.index');
+Route::get('/boutique/category/{id}', [BoutiqueController::class, 'showByCategory'])->name('boutique.category');
