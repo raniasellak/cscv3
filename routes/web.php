@@ -3,11 +3,17 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FormationController;
+use App\Http\Controllers\InscriptionController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// routes/web.php
 
+use App\Http\Controllers\AttestationController;
+
+Route::get('/attestations/show/{inscription}', [AttestationController::class, 'generate'])->name('attestations.show');
+
+Route::get('/attestations/show/{inscription}', [App\Http\Controllers\AttestationController::class, 'generate'])->name('attestation.show');
 
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
@@ -27,3 +33,17 @@ Route::get('/admin/dashboard', function () {
 Route::get('/user/index', function () {
     return view('user.index');
 })->name('user.index')->middleware('auth');
+
+
+// Routes publiques
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+
+
+Route::resource('formations', FormationController::class);
+
+
+Route::post('/formations/{formationId}/quick-register', [InscriptionController::class, 'quickRegister'])->name('inscriptions.quick');
+
+Route::put('/formations/{formation}/presence', [FormationController::class, 'updatePresence'])->name('formations.presence');
