@@ -56,3 +56,6 @@ Route::post('/chatbot', function (\Illuminate\Http\Request $request) {
 
     return response()->json(['reply' => "Désolé, je ne comprends pas cette question."]);
 });
+Route::get('/accueil', function () {
+return view('accueil');
+})->name('accueil');
