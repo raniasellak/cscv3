@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\BoutiqueController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -47,3 +47,5 @@ Route::resource('formations', FormationController::class);
 Route::post('/formations/{formationId}/quick-register', [InscriptionController::class, 'quickRegister'])->name('inscriptions.quick');
 
 Route::put('/formations/{formation}/presence', [FormationController::class, 'updatePresence'])->name('formations.presence');
+Route::get('/boutique', [BoutiqueController::class, 'index'])->name('boutique.index');
+Route::get('/boutique/category/{id}', [BoutiqueController::class, 'showByCategory'])->name('boutique.category');
