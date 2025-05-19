@@ -3,6 +3,8 @@ use App\Http\Controllers\BoutiqueController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,3 +32,11 @@ Route::get('/user/index', function () {
 
 Route::get('/boutique', [BoutiqueController::class, 'index'])->name('boutique.index');
 Route::get('/boutique/category/{id}', [BoutiqueController::class, 'showByCategory'])->name('boutique.category');
+
+
+// Afficher le formulaire d'ajout de produit
+Route::resource('products', ProductController::class);
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('products', ProductController::class);
+});
