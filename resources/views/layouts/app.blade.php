@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>@yield('title', 'Boutique')</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
+
 <body>
     <div class="container mt-5">
         <!-- Gestion des messages flash -->
@@ -38,7 +41,7 @@
             </div>
         @endif
 
-        <!-- Affichage des erreurs de validation globales -->
+        <!-- Affichage des erreurs de validation -->
         @if($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <h5 class="alert-heading">Veuillez corriger les erreurs suivantes :</h5>
@@ -53,6 +56,8 @@
 
         @yield('content')
     </div>
+
+    {{-- NAVBAR (à ajouter ici si nécessaire) --}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

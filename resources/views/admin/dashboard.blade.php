@@ -36,15 +36,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
+                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="/formations">
                         <i class="bi bi-grid me-3"></i>
-                        <span class="sidebar-text">Base</span>
+                        <span class="sidebar-text">Formations</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
+                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="/formations/create">
                         <i class="bi bi-layout-sidebar me-3"></i>
-                        <span class="sidebar-text">Sidebar Layouts</span>
+                        <span class="sidebar-text">Create Formation</span>
                     </a>
                 </li>
                 <li class="nav-item">

@@ -44,10 +44,9 @@
       
       <div class="auth-buttons">
         <!-- Route: à définir pour la connexion -->
-        <a href="#" class="btn btn-outline connexion">Connexion</a>
-        
-        <!-- Route: à définir pour l'inscription -->
-        <a href="#" class="btn btn-primary inscription">Inscription</a>
+        <a href="{{ route('login.form') }}" class="btn btn-outline connexion">Connexion</a>
+        <a href="{{ route('register.form') }}" class="btn btn-primary inscription">Inscription</a>
+
       </div>
     </div>
   </div>
