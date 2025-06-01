@@ -275,10 +275,10 @@
                 <a href="#" class="nav-logo">CSC Boutique</a>
                 <div class="nav-actions">
                     <div class="cart-count">
-                        <div class="cart-icon">
+                        <a href="{{ route('cart.index') }}" class="cart-icon" title="Voir le panier">
                             <i class="fas fa-shopping-cart"></i>
-                            <div class="cart-badge">0</div>
-                        </div>
+                            <div class="cart-badge">{{ session('cart') ? count(session('cart')) : 0 }}</div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -301,136 +301,37 @@
         </div>
         
         <div class="products">
-            <!-- T-shirt CSC -->
-            <div class="product-card" data-category="vetements">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="T-shirt CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">T-shirt CSC</h3>
-                    <p class="product-description">T-shirt avec le logo du club, 100% coton.</p>
-                    <div class="product-price">120 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
+            @foreach($products as $product)
+                <div class="product-card" data-category="{{ $product->category->name ?? 'autre' }}">
+                    <div class="product-img">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        <div class="favorite"><i class="fas fa-heart"></i></div>
+                        @if(isset($product->is_new) && $product->is_new)
+                            <div class="badge-new">Nouveau</div>
+                        @endif
+                        @if(isset($product->is_promo) && $product->is_promo)
+                            <div class="badge-promo">Promo</div>
+                        @endif
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">{{ $product->name }}</h3>
+                        <p class="product-description">{{ $product->description }}</p>
+                        <div class="product-price">{{ $product->price }} DH</div>
+                        <div class="product-actions">
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                <button type="submit" class="add-to-cart">Ajouter au panier</button>
+                            </form>
+                            <form action="{{ route('favorites.add', $product->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger" title="Ajouter aux favoris">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Mug CSC -->
-            <div class="product-card" data-category="accessoires">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Mug CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Mug CSC</h3>
-                    <p class="product-description">Mug en céramique avec le logo du club, 350ml.</p>
-                    <div class="product-price">80 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Pack de stickers -->
-            <div class="product-card" data-category="papeterie">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Pack de stickers">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                    <div class="badge-new">Nouveau</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Stickers Pack</h3>
-                    <p class="product-description">Pack de 5 stickers dev, IA et cybersécurité.</p>
-                    <div class="product-price">50 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Notebook CSC -->
-            <div class="product-card" data-category="papeterie">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Notebook CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Notebook CSC</h3>
-                    <p class="product-description">Carnet de notes avec couverture rigide et logo CSC.</p>
-                    <div class="product-price">60 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Sac CSC -->
-            <div class="product-card" data-category="accessoires">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Sac CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Sac à dos CSC</h3>
-                    <p class="product-description">Sac à dos résistant avec compartiment pour ordinateur portable.</p>
-                    <div class="product-price">250 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Clé USB CSC -->
-            <div class="product-card" data-category="gadgets">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Clé USB CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                    <div class="badge-promo">-20%</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Clé USB CSC</h3>
-                    <p class="product-description">Clé USB 64Go avec le logo CSC, USB 3.0.</p>
-                    <div class="product-price">120 DH <span style="text-decoration: line-through; color: #999; font-size: 16px;">150 DH</span></div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Sweat CSC -->
-            <div class="product-card" data-category="vetements">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Sweat CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Sweat CSC</h3>
-                    <p class="product-description">Sweat à capuche avec le logo CSC brodé, très confortable.</p>
-                    <div class="product-price">220 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tapis de souris -->
-            <div class="product-card" data-category="accessoires">
-                <div class="product-img">
-                    <img src="/api/placeholder/400/320" alt="Tapis de souris CSC">
-                    <div class="favorite"><i class="fas fa-heart"></i></div>
-                    <div class="badge-new">Nouveau</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Tapis de souris CSC</h3>
-                    <p class="product-description">Tapis de souris gaming XL avec le logo CSC.</p>
-                    <div class="product-price">90 DH</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
@@ -441,10 +342,6 @@
     </footer>
 
     <script>
-        // Initialisation du compteur du panier
-        let cartCount = 0;
-        const cartBadge = document.querySelector('.cart-badge');
-        
         // Gestion des favoris
         const favoriteButtons = document.querySelectorAll('.favorite');
         favoriteButtons.forEach(button => {
@@ -458,37 +355,19 @@
                 }
             });
         });
-        
-        // Gestion du panier
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                cartCount++;
-                cartBadge.textContent = cartCount;
-                
-                // Animation d'ajout au panier
-                this.textContent = 'Ajouté !';
-                this.style.backgroundColor = '#2ecc71';
-                
-                setTimeout(() => {
-                    this.textContent = 'Ajouter au panier';
-                    this.style.backgroundColor = '';
-                }, 1000);
-            });
-        });
-        
+
         // Filtrage des produits
         const filterButtons = document.querySelectorAll('.filter-btn');
         const productCards = document.querySelectorAll('.product-card');
-        
+
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
                 // Mettre à jour l'état actif
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const filter = this.getAttribute('data-filter');
-                
+
                 productCards.forEach(card => {
                     if (filter === 'all' || card.getAttribute('data-category') === filter) {
                         card.style.display = 'block';
@@ -498,16 +377,16 @@
                 });
             });
         });
-        
+
         // Recherche de produits
         const searchBox = document.querySelector('.search-box');
         searchBox.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
-            
+
             productCards.forEach(card => {
                 const title = card.querySelector('.product-title').textContent.toLowerCase();
                 const description = card.querySelector('.product-description').textContent.toLowerCase();
-                
+
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
                     card.style.display = 'block';
                 } else {

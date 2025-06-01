@@ -79,7 +79,7 @@
                     </a>
                 </li>
                <li class="nav-item">
-    <a href="{{ route('admin.produits.create') }}" class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1">
+    <a href="{{ route('admin.products.create') }}" class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1">
         <i class="bi bi-plus-circle me-3"></i>
         <span class="sidebar-text">Ajouter un produit</span>
     </a>
