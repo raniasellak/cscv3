@@ -1,4 +1,4 @@
-@extends('layouts.appp')
+@extends('layouts.master')
 
 @section('title', $formation->title . ' - CSC Formations')
 
@@ -77,6 +77,9 @@
 </style>
 
 <div class="container">
+    <a href="{{ route('formations.index') }}" class="btn btn-outline-secondary mb-4">
+        <i class="bi bi-arrow-left"></i> Retour
+    </a>
     <h2 class="formation-title mt-4">{{ $formation->title }}</h2>
 
     <div class="formation-card">
@@ -85,7 +88,6 @@
             <p><strong>Catégorie :</strong> {{ $formation->category }}</p>
             <p><strong>Formateur :</strong> {{ $formation->formateur_email }}</p>
             <p><strong>Date :</strong> {{ \Carbon\Carbon::parse($formation->date)->format('d/m/Y') }}</p>
-
             @if ($formation->recording)
                 <p><strong>Enregistrement :</strong> <a href="{{ $formation->recording }}" target="_blank" style="color: #F7941D;">Voir l'enregistrement</a></p>
             @endif
@@ -99,7 +101,6 @@
 
         @if (auth()->check() && auth()->user()->role == 'admin')
         <div class="action-buttons">
-            <a href="{{ route('formations.index') }}" class="btn btn-secondary btn-custom">Retour</a>
             <a href="{{ route('formations.edit', $formation->id) }}" class="btn btn-warning btn-custom">Modifier</a>
             <form action="{{ route('formations.destroy', $formation->id) }}" method="POST" class="d-inline">
                 @csrf

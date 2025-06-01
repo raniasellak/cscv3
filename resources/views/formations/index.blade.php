@@ -90,11 +90,7 @@ Nos Formations
                 </div>
             @endif
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            
 
             <!-- Affichage des formations -->
             @if($formations->isEmpty())
@@ -115,7 +111,7 @@ Nos Formations
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach`
                 </div>
             @endif
         </div>

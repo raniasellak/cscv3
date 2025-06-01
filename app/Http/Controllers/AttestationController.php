@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use PDF; // alias pour Barryvdh\DomPDF\Facade\Pdf
+use Barryvdh\DomPDF\Facade\Pdf; //PDF
 
 use App\Models\Inscription;
 use Illuminate\Http\Request;

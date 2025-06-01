@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Formation;
 use Illuminate\Http\Request;
@@ -27,9 +28,14 @@ class FormationController extends Controller
 
     public function create()
     {
+        if (Auth::check() && Auth::user()->role === 'admin') {
         return view('formations.create');
     }
 
+
+    // Sinon : accès refusé
+    abort(403, 'Accès refusé');
+    }
     public function store(Request $request)
 {
     $request->validate([
