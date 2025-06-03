@@ -50,15 +50,20 @@
                     <input type="url" name="recording" id="recording" class="form-control">
                 </div>
                 
-                <div class="form-col">
-                    <label for="support_course" class="form-label">Support de cours</label>
-                    <input type="url" name="support_course" id="support_course" class="form-control">
+                <div class="form-row">
+                    <label for="support_course" class="form-label">Support de cours (PDF)</label>
+                    <input type="file" name="support_course" id="support_course" class="form-control" accept="application/pdf">
+                    <div class="form-text">
+                        Format accepté : PDF (max 5MB)
+                    </div>
                 </div>
+                
             </div>
+    </div>
             
             <div class="mb-3">
-                <label for="contenu" class="form-label required">Contenu</label>
-                <textarea name="contenu" id="contenu" class="form-control" rows="5" required>{{ old('contenu') }}</textarea>
+                <label for="contenu" class="form-label required">Prérequis</label>
+                <textarea name="contenu" id="contenu" class="form-control" rows="3" ></textarea>
             </div>
             
             <div class="form-footer">

@@ -15,6 +15,7 @@ class Evenement extends Model
     'date',
     'lieu',
     'agenda',
+    'image',
 ];
 
 

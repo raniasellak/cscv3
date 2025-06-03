@@ -16,8 +16,7 @@ class CreateEvenementsTable extends Migration
             $table->string('lieu')->nullable();
             $table->date('date');
             $table->text('description')->nullable();
-            $table->json('agenda')->nullable();
-;
+            $table->json('agenda');
             $table->timestamps();
         });
     }

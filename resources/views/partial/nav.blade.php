@@ -142,6 +142,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/"><i class="fas fa-graduation-cap me-1"></i>Acceuil</a>
                     </li>
+                    @if (auth()->check() && auth()->user()->role == 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard"><i class="fas fa-graduation-cap me-1"></i>Dashboard</a>
+                    </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="/formations"><i class="fas fa-graduation-cap me-1"></i>Formation</a>
                     </li>
@@ -149,7 +154,7 @@
                         <a class="nav-link" href="/evenements"><i class="fas fa-graduation-cap me-1"></i>Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-users me-1"></i>À propos</a>
+                        <a class="nav-link" href="/about"><i class="fas fa-users me-1"></i>À propos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('boutique.index') }}"><i class="fas fa-shopping-cart me-1"></i>Boutique</a>

@@ -11,9 +11,9 @@ class BoutiqueController extends Controller
     {
         // Récupération de toutes les catégories
         $categories = Category::all();
-        
-        // Envoi des catégories à la vue
-        return view('boutique.index', compact('categories'));
+        $products = \App\Models\Product::all();
+        // Envoi des catégories et produits à la vue
+        return view('boutique.index', compact('categories', 'products'));
     }
     
      public function showByCategory($id)

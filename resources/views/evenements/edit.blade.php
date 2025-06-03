@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Modifier un Événement</h1>
 
-    <form action="{{ route('evenements.update', $evenement) }}" method="POST">
+<form action="{{ route('evenements.update', $evenement) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -22,9 +22,23 @@
             <input type="date" name="date" class="form-control" value="{{ old('date', $evenement->date->format('Y-m-d')) }}" required>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
+            <label for="description" class="form-label">À propos</label>
             <textarea name="description" rows="3" class="form-control">{{ old('description', $evenement->description) }}</textarea>
         </div>
+        <div class="mb-3">
+    <label for="long_description" class="form-label">Description longue</label>
+    <textarea name="long_description" rows="5" class="form-control">{{ old('long_description', $evenement->long_description) }}</textarea>
+</div>
+
+        <div class="mb-3">
+    <label for="image" class="form-label">Image</label>
+    <input type="file" name="image" class="form-control">
+    @if ($evenement->image)
+        <p class="mt-2">Image actuelle :</p>
+        <img src="{{ asset('storage/' . $evenement->image) }}" alt="Image actuelle" width="200">
+    @endif
+</div>
+
 
         <div class="mb-3">
             <label class="form-label">Agenda</label>
@@ -44,7 +58,7 @@
 @section('scripts')
 <script>
     // On récupère l'agenda JSON depuis Blade (attention à bien échapper)
-    const existingAgenda = @json(old('agenda', $evenement->agenda ?? []));
+    const existingAgenda = @json(old('agenda', $agenda ?? []));
 
     function addDay(dayName = null, sessions = []) {
         if (!dayName) {

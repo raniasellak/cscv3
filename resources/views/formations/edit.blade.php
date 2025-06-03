@@ -73,7 +73,7 @@ Modifier la formation
                     <p class="text-muted">Mettez à jour les informations de la formation</p>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('formations.update', $formation->id) }}" method="POST">
+                    <form action="{{ route('formations.update', $formation->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -107,9 +107,18 @@ Modifier la formation
                         </div>
 
                         <div class="mb-3">
-                            <label for="contenu" class="form-label">Contenu</label>
-                            <textarea name="contenu" class="form-control">{{ $formation->contenu }}</textarea>
+                            <label for="contenu" class="form-label">Prérequis</label>
+                            <textarea name="contenu" class="form-control" required>{{ $formation->contenu }}</textarea>
                         </div>
+                        <div class="mb-3">
+                            <label for="support_course" class="form-label">Support de cours (PDF)</label>
+                            <input type="file" name="support_course" id="support_course" class="form-control" accept="application/pdf">
+                            <div class="form-text">
+                                Format accepté : PDF (max 5MB)
+                            </div>
+                        </div>
+                        
+                        
 
                         <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-orange">Mettre à jour</button>

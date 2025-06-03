@@ -19,14 +19,17 @@ class AttestationController extends Controller
 
         $data = [
             'nom' => $inscription->nom,
-            'formation' => $formation->titre,
+            'formation' => $formation,
+            'date' => $formation->date,
         ];
-
         // Génération PDF à partir d'une vue
-        $pdf = PDF::loadView('attestation.pdf', $data);
+       return PDF::loadView('attestation.pdf', $data)
+    ->download('attestation.pdf');
 
-        // Retourner le PDF en téléchargement
-        return $pdf->download('attestation.pdf');
+
+
+
+
     }
 
 

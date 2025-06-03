@@ -14,6 +14,9 @@
         :root {
             --orange-color: #FF6B00;
             --black-color: #000000;
+            --dark-gray: #2c2c2c;
+            --beige-color: #F5F5DC;
+            --light-gray: #f8f9fa;
         }
 
         body {
@@ -25,7 +28,7 @@
 
         /* Navbar styling */
         .navbar {
-            background-color: var(--black-color);
+            background-color: var(--dark-gray);
             padding: 15px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -33,7 +36,19 @@
         .navbar-brand {
             font-weight: 700;
             font-size: 1.5rem;
+            color: white !important;
+        }
+
+        .brand-c1 {
+            color: var(--black-color) !important;
+        }
+
+        .brand-s {
             color: var(--orange-color) !important;
+        }
+
+        .brand-c2 {
+            color: var(--beige-color) !important;
         }
 
         .nav-link {
@@ -90,44 +105,185 @@
             padding: 30px 0;
         }
 
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--beige-color) 0%, #f0f0f0 100%);
+            padding: 50px 0;
+            border-top: 3px solid var(--orange-color);
+        }
+
+        .newsletter-title {
+            color: var(--dark-gray);
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--orange-color);
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+        }
+
+        .newsletter-btn {
+            background-color: var(--orange-color);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #ff8c33;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+        }
+
         /* Footer styling */
         footer {
-            background-color: var(--black-color);
+            background: linear-gradient(135deg, var(--dark-gray) 0%, #3a3a3a 100%);
             color: white;
-            padding: 30px 0;
+            padding: 60px 0 20px;
             margin-top: auto;
         }
 
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
+        .footer-main {
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
         }
 
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .footer-section h5 {
             color: var(--orange-color);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
             margin-bottom: 10px;
         }
 
-        .social-icons a {
-            color: white;
-            margin-right: 15px;
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .social-icons a:hover {
+        .footer-section ul li a:hover {
+            color: var(--orange-color);
+            padding-left: 5px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand-c1 {
+            color: var(--black-color);
+        }
+
+        .footer-brand-s {
             color: var(--orange-color);
         }
 
-        .footer-copyright {
-            border-top: 1px solid #333;
-            margin-top: 20px;
-            padding-top: 20px;
+        .footer-brand-c2 {
+            color: var(--beige-color);
+        }
+
+        .footer-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            color: white;
             text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--orange-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        .contact-info {
+            color: #ccc;
+        }
+
+        .contact-info i {
+            color: var(--orange-color);
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            color: #999;
+        }
+
+        .footer-bottom a {
+            color: var(--orange-color);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .newsletter-title {
+                font-size: 1.5rem;
+            }
+            
+            .newsletter-form .row {
+                gap: 15px;
+            }
+            
+            .footer-section {
+                margin-bottom: 30px;
+            }
         }
     </style>
 </head>
@@ -135,23 +291,30 @@
     <!-- Navbar améliorée avec Bootstrap -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Mon Site</a>
+            <a class="navbar-brand" href="#"><span class="brand-c1">C</span><span class="brand-s">S</span><span class="brand-c2">C</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a class="nav-link" href="/user/index"><i class="fas fa-graduation-cap me-1"></i>Acceuil</a>
+=======
+                        <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-home me-1"></i>Accueil</a>
+>>>>>>> fc90bdf0eb0ad760ba42086aa0ea9fa824d03cc8
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/formations"><i class="fas fa-graduation-cap me-1"></i>Formation</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-users me-1"></i>À propos</a>
+                        <a class="nav-link" href="/about"><i class="fas fa-users me-1"></i>À propos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('boutique.index') }}"><i class="fas fa-shopping-cart me-1"></i>Boutique</a>
+                        <a class="nav-link" href="{{ route('boutique.index') }}"><i class="fas fa-store me-1"></i>Boutique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contact.show') }}"><i class="fas fa-envelope me-1"></i>Contacter nous</a>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -168,28 +331,173 @@
         </div>
     </div>
 
+    <!-- Section Newsletter -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="newsletter-title">
+                    <i class="fas fa-envelope-open-text text-warning me-2"></i>
+                    Restez Informé
+                </h2>
+                <p class="newsletter-subtitle">
+                    Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et offres exclusives
+                </p>
+                <form class="newsletter-form">
+                    <div class="row g-3 align-items-center justify-content-center">
+                        <div class="col-md-7">
+                            <input type="email" class="form-control newsletter-input" placeholder="Votre adresse email" required>
+                        </div>
+                        <div class="col-md-auto">
+                            <button type="submit" class="btn btn-warning newsletter-btn">
+                                <i class="fas fa-paper-plane me-2"></i>S'abonner
+                            </button>
+                        </div>
+                    </div>
+                    <small class="text-muted mt-2 d-block">
+                        <i class="fas fa-lock me-1"></i>
+                        Nous respectons votre vie privée. Pas de spam, désinscription facile.
+                    </small>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer amélioré -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <div class="footer-logo">Mon Site</div>
-                    <p>Votre partenaire pour des formations de qualité</p>
-                </div>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
+            <div class="footer-main">
+                <div class="row">
+                    <!-- Colonne 1: À propos -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="footer-section">
+                            <div class="footer-logo">
+                                <span class="footer-brand-c1">C</span><span class="footer-brand-s">S</span><span class="footer-brand-c2">C</span>
+                            </div>
+                            <p class="footer-description">
+                                Votre partenaire de confiance pour des formations de qualité. 
+                                Nous vous accompagnons dans votre développement professionnel 
+                                avec des programmes adaptés à vos besoins.
+                            </p>
+                            <div class="social-icons">
+                                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 2: Liens rapides -->
+                    <div class="col-lg-2 col-md-6 mb-4">
+                        <div class="footer-section">
+                            <h5>Liens Rapides</h5>
+                            <ul>
+                                <li><a href="{{ route('user.index') }}">Accueil</a></li>
+                                <li><a href="/formations">Formations</a></li>
+                                <li><a href="{{ route('boutique.index') }}">Boutique</a></li>
+                                <li><a href="#">À propos</a></li>
+                                <li><a href="{{ route('contact.show') }}">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 3: Services -->
+                    <div class="col-lg-2 col-md-6 mb-4">
+                        <div class="footer-section">
+                            <h5>Nos Services</h5>
+                            <ul>
+                                <li><a href="#">Formation en ligne</a></li>
+                                <li><a href="#">Certification</a></li>
+                                <li><a href="#">Coaching</a></li>
+                                <li><a href="#">Consultation</a></li>
+                                <li><a href="#">Support 24/7</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 4: Contact -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="footer-section">
+                            <h5>Contactez-nous</h5>
+                            <div class="contact-info">
+                                <p><i class="fas fa-map-marker-alt"></i>123 Rue de la Formation, 75001 Paris</p>
+                                <p><i class="fas fa-phone"></i>+33 1 23 45 67 89</p>
+                                <p><i class="fas fa-envelope"></i>contact@monsite.fr</p>
+                                <p><i class="fas fa-clock"></i>Lun - Ven: 9h00 - 18h00</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="footer-copyright">
-                <p>&copy; {{ date('Y') }} Mon Site Web. Tous droits réservés.</p>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">
+                            &copy; {{ date('Y') }} <a href="#"><span class="footer-brand-c1">C</span><span class="footer-brand-s">S</span><span class="footer-brand-c2">C</span></a>. Tous droits réservés.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Politique de confidentialité</a>
+                        <a href="#" class="me-3">Conditions d'utilisation</a>
+                        <a href="#">Mentions légales</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Animation pour le formulaire newsletter
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.newsletter-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Inscription...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check me-2"></i>Inscrit !';
+                btn.classList.remove('btn-warning');
+                btn.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-warning');
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Animation d'apparition au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.footer-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
