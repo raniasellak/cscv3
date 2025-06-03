@@ -2,271 +2,468 @@
 
 @section('title', 'Dashboard Admin')
 
-
 @section('content')
-<div class="d-flex">
-    <!-- Sidebar -->
-    <div id="sidebar" class="bg-dark text-white" style="width: 250px; min-height: 100vh; transition: all 0.3s ease;">
-        <div class="d-flex align-items-center p-3 border-bottom">
-            <div class="me-2">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" width="40" class="me-2">
-            </div>
-            <h5 class="m-0 text-gradient sidebar-text">KaiAdmin</h5>
-            <button id="toggle-btn" class="btn text-white ms-auto">
-                <i class="bi bi-list"></i>
+<style>
+    .stats-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: none;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .stats-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(45deg, #ff6b35, #f7931e);
+    }
+    
+    .stats-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        margin-bottom: 15px;
+    }
+    
+    .stats-number {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+    
+    .stats-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .stats-change {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    
+    .stats-change.positive {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .stats-change.negative {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    
+    .chart-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    .chart-header {
+        padding: 25px 25px 15px;
+        border-bottom: 1px solid #eee;
+        background: #f8f9fa;
+    }
+    
+    .chart-body {
+        padding: 25px;
+    }
+    
+    .recent-activities {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    .activity-item {
+        padding: 15px 25px;
+        border-bottom: 1px solid #f1f1f1;
+        display: flex;
+        align-items: center;
+    }
+    
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+    
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 1rem;
+        color: white;
+    }
+    
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .btn-custom {
+        background: linear-gradient(45deg, #ff6b35, #f7931e);
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-custom {
+        border: 2px solid #ff6b35;
+        color: #ff6b35;
+        background: transparent;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-custom:hover {
+        background: #ff6b35;
+        color: white;
+    }
+    
+    .progress-custom {
+        height: 8px;
+        border-radius: 10px;
+        background-color: #e9ecef;
+        overflow: hidden;
+    }
+    
+    .progress-bar-custom {
+        background: linear-gradient(45deg, #ff6b35, #f7931e);
+        border-radius: 10px;
+        transition: width 0.6s ease;
+    }
+</style>
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="mb-2">Tableau de Bord</h2>
+            <p class="mb-0 opacity-75">Bienvenue dans votre espace d'administration</p>
+        </div>
+        <div>
+            <button class="btn btn-light me-2">
+                <i class="bi bi-download me-2"></i>Exporter
+            </button>
+            <button class="btn btn-custom">
+                <i class="bi bi-plus-circle me-2"></i>Nouveau
             </button>
         </div>
-        
-        <div class="p-2">
-            <div class="d-flex align-items-center p-3 mb-3">
-                <div class="avatar me-3">
-                    <img src="{{ asset('images/avatar.jpg') }}" alt="User" class="rounded-circle" width="40">
-                </div>
-                <div class="sidebar-text">
-                    <div class="fw-bold">Hi, {{ Auth::user()->name }}</div>
-                    <small class="text-muted">Admin</small>
-                </div>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
+                <i class="bi bi-people"></i>
             </div>
-            
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-speedometer2 me-3"></i>
-                        <span class="sidebar-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="/formations">
-                        <i class="bi bi-grid me-3"></i>
-                        <span class="sidebar-text">Formations</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="/formations/create">
-                        <i class="bi bi-layout-sidebar me-3"></i>
-                        <span class="sidebar-text">Create Formation</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-ui-checks me-3"></i>
-                        <span class="sidebar-text">Forms</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-table me-3"></i>
-                        <span class="sidebar-text">Tables</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-geo-alt me-3"></i>
-                        <span class="sidebar-text">Maps</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-bar-chart me-3"></i>
-                        <span class="sidebar-text">Charts</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-widget me-3"></i>
-                        <span class="sidebar-text">Widgets</span>
-                        <span class="badge bg-success rounded-pill ms-auto">4</span>
-                    </a>
-                </li>
-               <li class="nav-item">
-    <a href="{{ route('admin.products.create') }}" class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1">
-        <i class="bi bi-plus-circle me-3"></i>
-        <span class="sidebar-text">Ajouter un produit</span>
-    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50 d-flex align-items-center py-3 px-3 rounded mb-1" href="#">
-                        <i class="bi bi-list-nested me-3"></i>
-                        <span class="sidebar-text">Menu Levels</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="stats-number">1,294</div>
+            <div class="stats-label">Visiteurs</div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="stats-change positive">+12%</span>
+                <small class="text-muted">ce mois</small>
+            </div>
         </div>
     </div>
+    
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-icon" style="background: linear-gradient(45deg, #ff6b35, #f7931e);">
+                <i class="bi bi-person-check"></i>
+            </div>
+            <div class="stats-number">1,303</div>
+            <div class="stats-label">Abonnés</div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="stats-change positive">+8%</span>
+                <small class="text-muted">ce mois</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-icon" style="background: linear-gradient(45deg, #56ab2f, #a8e6cf);">
+                <i class="bi bi-cash-stack"></i>
+            </div>
+            <div class="stats-number">€1,345</div>
+            <div class="stats-label">Ventes</div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="stats-change positive">+15%</span>
+                <small class="text-muted">ce mois</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-icon" style="background: linear-gradient(45deg, #ff758c, #ff7eb3);">
+                <i class="bi bi-bag-check"></i>
+            </div>
+            <div class="stats-number">576</div>
+            <div class="stats-label">Commandes</div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="stats-change negative">-3%</span>
+                <small class="text-muted">ce mois</small>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Main Content -->
-    <div class="flex-grow-1">
-        <!-- Top Navbar -->
-        <div class="bg-white shadow-sm d-flex justify-content-between align-items-center p-3">
-            <div class="d-flex">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0">
-                        <i class="bi bi-search text-muted"></i>
-                    </span>
-                    <input type="text" class="form-control border-start-0" placeholder="Search...">
+<!-- Charts Section -->
+<div class="row g-4 mb-4">
+    <div class="col-xl-8">
+        <div class="chart-card">
+            <div class="chart-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Statistiques des Utilisateurs</h5>
+                    <div>
+                        <button class="btn btn-outline-custom btn-sm me-2">
+                            <i class="bi bi-download me-1"></i>Export
+                        </button>
+                        <button class="btn btn-outline-custom btn-sm">
+                            <i class="bi bi-printer me-1"></i>Imprimer
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex align-items-center">
-                <a href="#" class="text-muted me-3 position-relative">
-                    <i class="bi bi-envelope fs-5"></i>
-                </a>
-                <a href="#" class="text-muted me-3 position-relative">
-                    <i class="bi bi-bell fs-5"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        2
-                    </span>
-                </a>
-                <a href="#" class="text-muted me-3">
-                    <i class="bi bi-list-task fs-5"></i>
-                </a>
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('images/avatar.jpg') }}" alt="User" class="rounded-circle" width="32" height="32">
-                        <span class="ms-2">Hi, {{ Auth::user()->name }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}" 
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                               <i class="bi bi-box-arrow-right me-2"></i> Sign Out
-                            </a>
-                        </li>
-                    </ul>
+            <div class="chart-body">
+                <div style="height: 300px; background: linear-gradient(45deg, #f8f9fa, #e9ecef); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center text-muted">
+                        <i class="bi bi-bar-chart" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p class="mb-0">Graphique des statistiques</p>
+                        <small>Intégrer Chart.js ou ApexCharts ici</small>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Dashboard Content -->
-        <div class="p-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h3 class="mb-1">Dashboard</h3>
-                    <p class="text-muted">Free Bootstrap 5 Admin Dashboard</p>
-                </div>
-                <div>
-                    <button class="btn btn-light me-2">Manage</button>
-                    <button class="btn btn-primary">Add Customer</button>
-                </div>
-            </div>
-
-            <!-- Stats Cards -->
-            <div class="row g-3 mb-4">
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
-                            <div class="d-flex">
-                                <div class="bg-primary text-white p-3 rounded me-3">
-                                    <i class="bi bi-people fs-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-muted">Visitors</div>
-                                    <h3 class="mb-0">1,294</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
-                            <div class="d-flex">
-                                <div class="bg-info text-white p-3 rounded me-3">
-                                    <i class="bi bi-person-check fs-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-muted">Subscribers</div>
-                                    <h3 class="mb-0">1303</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
-                            <div class="d-flex">
-                                <div class="bg-success text-white p-3 rounded me-3">
-                                    <i class="bi bi-cash-stack fs-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-muted">Sales</div>
-                                    <h3 class="mb-0">$ 1,345</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
-                            <div class="d-flex">
-                                <div class="bg-purple text-white p-3 rounded me-3" style="background-color: #6f42c1;">
-                                    <i class="bi bi-check-circle fs-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-muted">Order</div>
-                                    <h3 class="mb-0">576</h3>
-                                </div>
-                            </div>
-                        </div>
+    </div>
+    
+    <div class="col-xl-4">
+        <div class="chart-card">
+            <div class="chart-header" style="background: linear-gradient(45deg, #ff6b35, #f7931e); color: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Ventes Quotidiennes</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                            Export
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Excel</a></li>
+                            <li><a class="dropdown-item" href="#">CSV</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
-            <!-- Charts Section -->
-            <div class="row g-3">
-                <div class="col-lg-8">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-3">
-                                <h5 class="card-title">User Statistics</h5>
-                                <div>
-                                    <button class="btn btn-sm btn-light me-2">Export</button>
-                                    <button class="btn btn-sm btn-light"><i class="bi bi-printer"></i> Print</button>
-                                </div>
-                            </div>
-                            <div style="height: 300px; position: relative;">
-                                <!-- This would be replaced with an actual chart library -->
-                                <div class="text-center py-5 text-muted">
-                                    <p>Chart Placeholder - Use Chart.js, ApexCharts, etc.</p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="chart-body">
+                <div class="mb-3">
+                    <small class="text-muted">25 Mars - 02 Avril</small>
+                    <h2 class="text-primary fw-bold">€4,578.58</h2>
+                </div>
+                <div style="height: 120px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <small class="text-muted">Mini graphique</small>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">17</h4>
+                        <small class="text-muted">Commandes</small>
+                    </div>
+                    <div class="text-success fw-bold">
+                        <i class="bi bi-arrow-up"></i> +5%
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card bg-primary text-white border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-3">
-                                <h5 class="card-title">Daily Sales</h5>
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Export
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#">PDF</a></li>
-                                        <li><a class="dropdown-item" href="#">Excel</a></li>
-                                        <li><a class="dropdown-item" href="#">CSV</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <small>March 25 - April 02</small>
-                                <h2 class="display-5 fw-bold">$4,578.58</h2>
-                            </div>
-                            <div style="height: 120px; position: relative;">
-                                <!-- This would be a small chart -->
-                                <div class="text-center text-white-50">
-                                    <small>Chart Placeholder</small>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <h4>17</h4>
-                                <div class="text-success">+5%</div>
-                            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activities -->
+<div class="row g-4">
+    <div class="col-xl-6">
+        <div class="recent-activities">
+            <div class="chart-header">
+                <h5 class="mb-0">Activités Récentes</h5>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">Nouvel utilisateur inscrit</div>
+                    <small class="text-muted">Marie Dubois s'est inscrite</small>
+                </div>
+                <small class="text-muted">Il y a 2h</small>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(45deg, #ff6b35, #f7931e);">
+                    <i class="bi bi-bag-plus"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">Nouvelle commande</div>
+                    <small class="text-muted">Commande #1234 - €145.50</small>
+                </div>
+                <small class="text-muted">Il y a 4h</small>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(45deg, #56ab2f, #a8e6cf);">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">Formation terminée</div>
+                    <small class="text-muted">Formation "Laravel Avancé" complétée</small>
+                </div>
+                <small class="text-muted">Il y a 6h</small>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(45deg, #ff758c, #ff7eb3);">
+                    <i class="bi bi-envelope"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">Newsletter envoyée</div>
+                    <small class="text-muted">1,250 destinataires</small>
+                </div>
+                <small class="text-muted">Il y a 1j</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-6">
+        <div class="recent-activities">
+            <div class="chart-header">
+                <h5 class="mb-0">Progression des Objectifs</h5>
+            </div>
+            <div class="activity-item">
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Ventes Mensuelles</span>
+                        <span class="text-muted">75%</span>
+                    </div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom" style="width: 75%"></div>
+                    </div>
+                    <small class="text-muted mt-1">€7,500 / €10,000</small>
+                </div>
+            </div>
+            <div class="activity-item">
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Nouveaux Clients</span>
+                        <span class="text-muted">60%</span>
+                    </div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom" style="width: 60%; background: linear-gradient(45deg, #667eea, #764ba2);"></div>
+                    </div>
+                    <small class="text-muted mt-1">120 / 200</small>
+                </div>
+            </div>
+            <div class="activity-item">
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Formations Complétées</span>
+                        <span class="text-muted">85%</span>
+                    </div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom" style="width: 85%; background: linear-gradient(45deg, #56ab2f, #a8e6cf);"></div>
+                    </div>
+                    <small class="text-muted mt-1">42 / 50</small>
+                </div>
+            </div>
+            <div class="activity-item">
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Satisfaction Client</span>
+                        <span class="text-muted">92%</span>
+                    </div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom" style="width: 92%; background: linear-gradient(45deg, #ff758c, #ff7eb3);"></div>
+                    </div>
+                    <small class="text-muted mt-1">4.6 / 5.0 étoiles</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-4 mt-4">
+    <div class="col-12">
+        <div class="chart-card">
+            <div class="chart-header">
+                <h5 class="mb-0">Actions Rapides</h5>
+            </div>
+            <div class="chart-body">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <button class="btn btn-custom">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                Ajouter Formation
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-custom">
+                                <i class="bi bi-people me-2"></i>
+                                Gérer Utilisateurs
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-custom">
+                                <i class="bi bi-envelope me-2"></i>
+                                Envoyer Newsletter
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-custom">
+                                <i class="bi bi-gear me-2"></i>
+                                Paramètres
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -275,58 +472,35 @@
     </div>
 </div>
 
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-</form>
-
-<style>
-    .nav-link.active {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white !important;
-    }
-    
-    .nav-link {
-        color: rgba(255, 255, 255, 0.7);
-        transition: all 0.3s;
-    }
-    
-    .nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: white;
-    }
-    
-    .text-gradient {
-        background: linear-gradient(45deg, #6f42c1, #007bff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    
-    .bg-purple {
-        background-color: #6f42c1;
-    }
-</style>
-
-<!-- Script JS -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggle-btn');
-        const sidebarText = document.querySelectorAll('.sidebar-text');
-        const mainContent = document.querySelector('.flex-grow-1');
-
-        toggleBtn.addEventListener('click', () => {
-            if (sidebar.style.width === '250px' || sidebar.style.width === '') {
-                sidebar.style.width = '80px';
-                sidebarText.forEach(text => text.style.display = 'none');
-                mainContent.style.marginLeft = '80px';
-            } else {
-                sidebar.style.width = '250px';
-                setTimeout(() => {
-                    sidebarText.forEach(text => text.style.display = 'block');
-                }, 150);
-                mainContent.style.marginLeft = '250px';
-            }
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    // Animation pour les cartes de statistiques
+    const statsCards = document.querySelectorAll('.stats-card');
+    statsCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        }, index * 100);
     });
+
+    // Animation pour les barres de progression
+    const progressBars = document.querySelectorAll('.progress-bar-custom');
+    setTimeout(() => {
+        progressBars.forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 500);
+        });
+    }, 1000);
+});
 </script>
+
 @endsection

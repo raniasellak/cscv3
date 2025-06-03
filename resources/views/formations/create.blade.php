@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Dashboard Admin')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -265,3 +270,4 @@
     </script>
 </body>
 </html>
+@endsection
