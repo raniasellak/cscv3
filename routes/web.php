@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactController;
 
 
+
 Route::get('/test-route', function() {
     return "Test route works!";
 });
@@ -24,11 +25,8 @@ use Illuminate\Support\Facades\Auth;
 // routes/web.php
 
 use App\Http\Controllers\AttestationController;
-// routes/web.php
-
-use App\Http\Controllers\EvenementController;
-
-Route::resource('evenements', EvenementController::class);
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/attestations/show/{inscription}', [App\Http\Controllers\AttestationController::class, 'generate'])->name('attestation.show');
@@ -121,15 +119,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // Routes pour le panier
-Route::get('/panier', function() {
-    return view('boutique.cart');
-})->name('cart.index');
-Route::post('/panier/remove/{id}', function($id) {
-    $cart = session('cart', []);
-    unset($cart[$id]);
-    session(['cart' => $cart]);
-    return redirect()->route('cart.index');
-})->name('cart.remove');
+Route::get('/panier', [CartController::class, 'index'])->name('cart.index');
+Route::post('/panier/add/{productId}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/panier/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 
 // Routes pour les favoris
 Route::get('/favoris', function() {
@@ -141,21 +133,6 @@ Route::post('/favoris/remove/{id}', function($id) {
     session(['favorites' => $favorites]);
     return redirect()->route('favorites.index');
 })->name('favorites.remove');
-
-// Ajouter au panier
-Route::post('/panier/add/{id}', function($id) {
-    $product = \App\Models\Product::findOrFail($id);
-    $cart = session('cart', []);
-    $cart[$id] = [
-        'id' => $product->id,
-        'name' => $product->name,
-        'description' => $product->description,
-        'image' => $product->image,
-        'price' => $product->price
-    ];
-    session(['cart' => $cart]);
-    return redirect()->back()->with('success', 'Produit ajouté au panier !');
-})->name('cart.add');
 
 // Ajouter aux favoris
 Route::post('/favoris/add/{id}', function($id) {
@@ -183,11 +160,20 @@ Route::get('/paiement/{id}', function($id) {
 })->name('payment.show');
 
 // Page de choix du mode de paiement
-Route::get('/paiement/choix/{id}', function($id) {
-    $cart = session('cart', []);
-    $product = $cart[$id] ?? null;
-    if (!$product) {
-        return redirect()->route('cart.index')->with('error', 'Produit non trouvé dans le panier.');
-    }
-    return view('boutique.payment_choice', compact('product'));
-})->name('payment.choice');
+Route::get('/paiement/choix/{cart}', [App\Http\Controllers\PaymentController::class, 'choice'])->name('payment.choice');
+Route::get('/payer-carte/{cart}', [App\Http\Controllers\PaymentController::class, 'card'])->name('payment.card');
+Route::get('/payer-paypal/{cart}', [App\Http\Controllers\PaymentController::class, 'paypal'])->name('payment.paypal');
+
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+
+// Route d'envoi de newsletter par l'adminuse App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
+
+// Affichage de la page de gestion de la newsletter (formulaire + liste des inscrits)
+Route::get('/admin/newsletter', [NewsletterController::class, 'index'])
+    ->name('admin.newsletter')
+    ->middleware('auth');
+
+// Envoi de la newsletter à tous les abonnés via le formulaire
+Route::post('/admin/newsletter/send', [AdminNewsletterController::class, 'send'])
+    ->name('admin.newsletter.send')
+    ->middleware('auth');

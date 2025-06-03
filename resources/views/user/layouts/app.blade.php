@@ -342,10 +342,17 @@
                 <p class="newsletter-subtitle">
                     Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et offres exclusives
                 </p>
-                <form class="newsletter-form">
+                @if(session('newsletter_success'))
+                    <div class="alert alert-success mt-3">{{ session('newsletter_success') }}</div>
+                @endif
+                @if(session('newsletter_error'))
+                    <div class="alert alert-danger mt-3">{{ session('newsletter_error') }}</div>
+                @endif
+                <form class="newsletter-form" method="POST" action="{{ route('newsletter.subscribe') }}">
+                    @csrf
                     <div class="row g-3 align-items-center justify-content-center">
                         <div class="col-md-7">
-                            <input type="email" class="form-control newsletter-input" placeholder="Votre adresse email" required>
+                            <input type="email" name="email" class="form-control newsletter-input" placeholder="Votre adresse email" required>
                         </div>
                         <div class="col-md-auto">
                             <button type="submit" class="btn btn-warning newsletter-btn">
@@ -453,30 +460,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Animation pour le formulaire newsletter
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('.newsletter-btn');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Inscription...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-check me-2"></i>Inscrit !';
-                btn.classList.remove('btn-warning');
-                btn.classList.add('btn-success');
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    btn.classList.remove('btn-success');
-                    btn.classList.add('btn-warning');
-                    this.reset();
-                }, 2000);
-            }, 1500);
-        });
-
         // Animation d'apparition au scroll
         const observerOptions = {
             threshold: 0.1,
