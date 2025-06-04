@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('user.layouts.app')
 
 @section('title', 'Espace utilisateur')
 

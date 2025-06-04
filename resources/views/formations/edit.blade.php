@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('title')
 Modifier la formation
@@ -56,7 +56,7 @@ Modifier la formation
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
