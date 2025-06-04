@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductController;
 
 
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\MemberController;
 
 
 Route::get('/test-route', function() {
@@ -56,24 +56,8 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::post('/chatbot', function (\Illuminate\Http\Request $request) {
-    $message = strtolower($request->input('message'));
 
-    $reponses = [
-        'quand le club a-t-il été fondé ?' => 'Le CSC a été fondé en 2025.',
-        'quelles sont les cellules du club ?' => 'Les cellules sont : Développement, Cybersécurité et Intelligence Artificielle.',
-        'qui fait partie du grand bureau ?' => 'Le grand bureau comprend le président, vice-président, secrétaire général, trésorier général, responsable communication, formation et design.',
-        'quelle est la mission du club ?' => "Notre mission est d'encourager l'innovation, l'apprentissage et la collaboration en informatique."
-    ];
 
-    foreach ($reponses as $question => $reponse) {
-        if (str_contains($message, strtolower($question))) {
-            return response()->json(['reply' => $reponse]);
-        }
-    }
-
-    return response()->json(['reply' => "Désolé, je ne comprends pas cette question."]);
-});
 Route::get('/accueil', function () {
 return view('accueil');
 })->name('accueil');
@@ -161,3 +145,17 @@ Route::get('/admin/newsletter', [NewsletterController::class, 'index'])
 Route::post('/admin/newsletter/send', [AdminNewsletterController::class, 'send'])
     ->name('admin.newsletter.send')
     ->middleware('auth');
+
+
+    Route::resource('members', MemberController::class);
+
+
+    use App\Http\Controllers\FrontendController;
+
+Route::get('/about', [FrontendController::class, 'about'])->name('about');
+use App\Http\Controllers\ChatbotController;
+
+// Routes pour le chatbot
+Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot.index');
+Route::post('/chatbot/send', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
+Route::get('/chatbot/test', [ChatbotController::class, 'testOpenAI'])->name('chatbot.test');

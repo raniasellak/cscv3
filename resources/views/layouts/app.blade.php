@@ -295,9 +295,9 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/members/create">
                     <i class="bi bi-bar-chart"></i>
-                    <span class="sidebar-text">Charts</span>
+                    <span class="sidebar-text">Ajouter des membres</span>
                 </a>
             </div>
            
