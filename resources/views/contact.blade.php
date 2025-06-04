@@ -1,4 +1,7 @@
+
 @extends('user.layouts.app')
+
+@extends('layouts.master')
 @section('title', 'Contactez-nous')
 
 @section('content')

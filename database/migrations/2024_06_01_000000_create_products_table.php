@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string(column: 'name');
             $table->longText(column: 'description');
-            $table->unsignedInteger(column: 'quantity')->default(0)->change();
-            $table->string(column: 'image');
-            $table->double('price', 8, 2)->unsigned();
+            $table->unsignedInteger(column: 'quantity')->default(0);
+            $table->string(column: 'image')->nullable();
+            $table->double('price', 8,2)->unsigned();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,4 +31,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('products');
     }
-};
+}; 

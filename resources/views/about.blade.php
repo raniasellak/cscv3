@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('layouts.master')
 
 @section('title', 'À propos du CSC')
 

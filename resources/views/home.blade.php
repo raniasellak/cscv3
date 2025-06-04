@@ -1,4 +1,4 @@
-@extends('layouts.master')  
+@extends('user.layouts.app')  
 
 @section('main')
 <!-- Section héro avec image de fond -->

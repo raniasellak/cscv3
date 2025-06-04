@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('role');
             $table->text('description');
             $table->string('image')->nullable(); // pour l'image
-            $table->timestamps(); // timestamps recommandés
+            $table->timestamps(); // à ne pas oublier pour created_at et updated_at
         });
 
         // Création de la table categories

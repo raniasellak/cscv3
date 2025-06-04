@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Formation extends Model
 {
     protected $fillable = [
-        'title', 'description', 'category', 'recording',
-        'support_course', 'formateur_email', 'date'
+        'title',
+        'description',
+        'category',
+        'formateur_email',
+        'date',
+        'contenu',
+        'support_course', // <-- Ajout ici
     ];
     public function inscriptions()
 {

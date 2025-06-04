@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-Nos Formations
-@endsection
-
 @section('content')
 <div class="container-fluid">
     <!-- Header Section -->
@@ -11,24 +7,19 @@ Nos Formations
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="logo mb-3">
-                        <span class="logo-c">C</span>
-                        <span class="logo-s">S</span>
-                        <span class="logo-c2">C</span>
-                    </div>
-                    <h1 class="mb-2">Explorez Nos Formations</h1>
+                    <h1 class="mb-2">Explorez Nos Événements</h1>
                     <p class="text-muted mb-0">
-                        @if(method_exists($formations, 'total'))
-                            {{ $formations->total() }} formation(s) au total
+                        @if(method_exists($evenements, 'total'))
+                            {{ $evenements->total() }} événement(s) au total
                         @else
-                            {{ $formations->count() }} formation(s) au total
+                            {{ $evenements->count() }} événement(s) au total
                         @endif
                     </p>
                 </div>
-                @if (auth()->check() && auth()->user()->role == 'admin')
+                 @if (auth()->check() && auth()->user()->role == 'admin')
                 <div>
-                    <a href="{{ route('formations.create') }}" class="btn btn-orange">
-                        <i class="fas fa-plus"></i> Nouvelle Formation
+                    <a href="{{ route('evenements.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nouvel Événement
                     </a>
                 </div>
                 @endif
@@ -36,32 +27,7 @@ Nos Formations
         </div>
     </div>
 
-    <!-- Filters Section -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form method="GET" action="{{ route('formations.index') }}" class="row g-3">
-                        <div class="col-md-4">
-                            <label for="category" class="form-label">Catégorie</label>
-                            <select name="category" id="category" class="form-select">
-                                <option value="">Toutes les catégories</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat }}" {{ $cat == $category ? 'selected' : '' }}>{{ $cat }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                       
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="submit" class="btn btn-orange w-100">
-                                <i class="fas fa-filter"></i> Filtrer
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Success/Error Messages -->
     @if(session('success'))
@@ -95,104 +61,93 @@ Nos Formations
         </div>
     </div>
 
-    <!-- Formations Grid View -->
+    <!-- Events Grid View -->
     <div id="grid-container">
-        @if($formations->count() > 0)
+        @if($evenements->count() > 0)
             <div class="row">
-                @foreach($formations as $formation)
+                @foreach($evenements as $evenement)
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 shadow-sm formation-card" data-formation-id="{{ $formation->id }}">
-                            <!-- Formation Image -->
+                        <div class="card h-100 shadow-sm event-card" data-event-id="{{ $evenement->id }}">
+                            <!-- Event Image -->
                             <div class="position-relative">
-                               @php
-    $categoryImages = [
-        'CyberSecurity' => 'cyber.jpg',
-        'AI'            => 'ai.webp',
-        'Dev'           => 'dev.jpg',
-    ];
-
-    $image = $categoryImages[$formation->category] ?? null;
-@endphp
-
-@if($image)
-    <img src="{{ asset('storage/formations/' . $image) }}" 
-         class="card-img-top" alt="{{ $formation->title }}"
-         style="height: 200px; object-fit: cover;">
-@else
-    <div class="card-img-top bg-gradient-orange d-flex align-items-center justify-content-center" 
-         style="height: 200px;">
-        <i class="fas fa-graduation-cap fa-3x text-white opacity-50"></i>
-    </div>
-@endif
-
+                                @if($evenement->image)
+                                    <img src="{{ asset('storage/' . $evenement->image) }}" 
+                                         class="card-img-top" alt="{{ $evenement->titre }}"
+                                         style="height: 200px; object-fit: cover;">
+                                @else
+                                    <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center" 
+                                         style="height: 200px;">
+                                        <i class="fas fa-calendar-alt fa-3x text-white opacity-50"></i>
+                                    </div>
+                                @endif
                                 
                                 <!-- Status Badge -->
                                 <div class="position-absolute top-0 end-0 m-2">
-                                    @if($formation->date < now())
-                                        <span class="badge bg-secondary">Terminée</span>
-                                    {{-- @elseif($formation->date->isToday())
+                                    @if($evenement->date < now())
+                                        <span class="badge bg-secondary">Passé</span>
+                                    @elseif($evenement->date->isToday())
                                         <span class="badge bg-warning text-dark">Aujourd'hui</span>
-                                    @elseif($formation->date->isTomorrow())
-                                        <span class="badge bg-info">Demain</span> --}}
+                                    @elseif($evenement->date->isTomorrow())
+                                        <span class="badge bg-info">Demain</span>
                                     @else
                                         <span class="badge bg-success">À venir</span>
                                     @endif
                                 </div>
-                                
-                                <!-- Category Badge -->
-                                <div class="position-absolute top-0 start-0 m-2">
-                                    <span class="badge bg-orange text-white">{{ $formation->category }}</span>
-                                </div>
                             </div>
 
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-orange">{{ $formation->title }}</h5>
+                                <h5 class="card-title">{{ $evenement->titre }}</h5>
                                 
                                 <div class="mb-2">
                                     <small class="text-muted">
                                         <i class="fas fa-calendar me-1"></i>
-                                        {{ \Carbon\Carbon::parse($formation->date)->format('d/m/Y') }}
+                                        {{ $evenement->date->format('d/m/Y') }}
                                     </small>
-                                    @if($formation->duration)
+                                    @if($evenement->lieu)
                                         <br>
                                         <small class="text-muted">
-                                            <i class="fas fa-clock me-1"></i>
-                                            {{ $formation->duration }}
-                                        </small>
-                                    @endif
-                                    @if($formation->instructor)
-                                        <br>
-                                        <small class="text-muted">
-                                            <i class="fas fa-user me-1"></i>
-                                            {{ $formation->instructor }}
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            {{ $evenement->lieu }}
                                         </small>
                                     @endif
                                 </div>
 
-                                @if($formation->description)
+                                @if($evenement->description)
                                     <p class="card-text text-muted small">
-                                        {{ Str::limit($formation->description, 120) }}
+                                        {{ Str::limit($evenement->description, 120) }}
                                     </p>
                                 @endif
 
+                                <!-- Agenda Preview -->
+                                @if($evenement->agenda && is_array(json_decode($evenement->agenda, true)))
+                                    @php
+                                        $agenda = json_decode($evenement->agenda, true);
+                                        $totalSessions = collect($agenda)->sum(fn($day) => count($day));
+                                    @endphp
+                                    <div class="mb-2">
+                                        <small class="text-primary">
+                                            <i class="fas fa-clock me-1"></i>
+                                            {{ count($agenda) }} jour(s) • {{ $totalSessions }} session(s)
+                                        </small>
+                                    </div>
+                                @endif
 
                                 <div class="mt-auto">
                                     <div class="btn-group w-100" role="group">
-                                        <a href="{{ route('formations.show', $formation) }}" 
-                                           class="btn btn-outline-orange btn-sm">
+                                        <a href="{{ route('evenements.show', $evenement) }}" 
+                                           class="btn btn-outline-primary btn-sm">
                                             <i class="fas fa-eye"></i> Voir
                                         </a>
-                                        @if (auth()->check() && auth()->user()->role == 'admin')
-                                        <a href="{{ route('formations.edit', $formation) }}" 
+                                         @if (auth()->check() && auth()->user()->role == 'admin')
+                                        <a href="{{ route('evenements.edit', $evenement) }}" 
                                            class="btn btn-outline-warning btn-sm">
                                             <i class="fas fa-edit"></i> Modifier
                                         </a>
                                         <button type="button" class="btn btn-outline-danger btn-sm" 
-                                                onclick="deleteFormation({{ $formation->id }}, '{{ $formation->title }}')">
+                                                onclick="deleteEvent({{ $evenement->id }}, '{{ $evenement->titre }}')">
                                             <i class="fas fa-trash"></i> Supprimer
                                         </button>
                                         @endif
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -202,127 +157,117 @@ Nos Formations
             </div>
         @else
             <div class="text-center py-5">
-                <i class="fas fa-graduation-cap fa-4x text-muted mb-3"></i>
-                <h4 class="text-muted">Aucune formation trouvée</h4>
+                <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">Aucun événement trouvé</h4>
                 <p class="text-muted">
-                    @if(request()->hasAny(['category', 'date_from', 'date_to']))
-                        Aucune formation ne correspond à vos critères de recherche.
+                    @if(request()->hasAny(['search', 'date_from', 'date_to']))
+                        Aucun événement ne correspond à vos critères de recherche.
                         <br>
-                        <a href="{{ route('formations.index') }}" class="btn btn-outline-orange mt-2">
-                            Voir toutes les formations
+                        <a href="{{ route('evenements.index') }}" class="btn btn-outline-primary mt-2">
+                            Voir tous les événements
                         </a>
                     @else
-                        Aucune formation disponible pour le moment.
-                        @if (auth()->check() && auth()->user()->role == 'admin')
+                        Commencez par créer votre premier événement.
                         <br>
-                        <a href="{{ route('formations.create') }}" class="btn btn-orange mt-2">
-                            <i class="fas fa-plus"></i> Créer une formation
+                        <a href="{{ route('evenements.create') }}" class="btn btn-primary mt-2">
+                            <i class="fas fa-plus"></i> Créer un événement
                         </a>
-                        @endif
                     @endif
                 </p>
             </div>
         @endif
     </div>
 
-    <!-- Formations List View (Hidden by default) -->
+    <!-- Events List View (Hidden by default) -->
     <div id="list-container" style="display: none;">
-        @if($formations->count() > 0)
+        @if($evenements->count() > 0)
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Formation</th>
-                                <th>Catégorie</th>
+                                <th>Événement</th>
                                 <th>Date</th>
-                                <th>Formateur</th>
+                                <th>Lieu</th>
                                 <th>Statut</th>
+                                <th>Sessions</th>
                                 <th width="200">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($formations as $formation)
+                            @foreach($evenements as $evenement)
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            @php
-    $categoryImages = [
-        'CyberSecurity' => 'cyber.jpg',
-        'AI'            => 'ai.webp',
-        'Dev'           => 'dev.jpg',
-    ];
-
-    $image = $categoryImages[$formation->category] ?? null;
-@endphp
-
-@if($image)
-    <img src="{{ asset('storage/formations/' . $image) }}" 
-        class="rounded me-3" alt="{{ $formation->title }}"
+                                            @if($evenement->image)
+                                                <img src="{{ asset('storage/' . $evenement->image) }}" 
+                                                     class="rounded me-3" alt="{{ $evenement->titre }}"
                                                      style="width: 50px; height: 50px; object-fit: cover;">
-@else
-    <div class="card-img-top bg-gradient-orange d-flex align-items-center justify-content-center" 
-         style="height: 200px;">
-        <i class="fas fa-graduation-cap fa-3x text-white opacity-50"></i>
-    </div>
-@endif
-
+                                            @else
+                                                <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center"
+                                                     style="width: 50px; height: 50px;">
+                                                    <i class="fas fa-calendar text-muted"></i>
+                                                </div>
+                                            @endif
                                             <div>
-                                                <h6 class="mb-0">{{ $formation->title }}</h6>
-                                                @if($formation->description)
-                                                    <small class="text-muted">{{ Str::limit($formation->description, 60) }}</small>
+                                                <h6 class="mb-0">{{ $evenement->titre }}</h6>
+                                                @if($evenement->description)
+                                                    <small class="text-muted">{{ Str::limit($evenement->description, 60) }}</small>
                                                 @endif
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="badge bg-orange text-white">{{ $formation->category }}</span>
+                                        <span class="fw-medium">{{ $evenement->date->format('d/m/Y') }}</span><br>
+                                        <small class="text-muted">{{ $evenement->date->format('l') }}</small>
                                     </td>
                                     <td>
-                                        <span class="fw-medium">{{ \Carbon\Carbon::parse($formation->date)->format('d/m/Y') }}</span><br>
-                                        <small class="text-muted">{{ \Carbon\Carbon::parse($formation->date)->format('l') }}</small>
-                                    </td>
-                                    
-                                    <td>
-                                        @if($formation->formateur_email)
-                                            <i class="fas fa-user text-muted me-1"></i>
-                                            {{ $formation->formateur_email }}
+                                        @if($evenement->lieu)
+                                            <i class="fas fa-map-marker-alt text-muted me-1"></i>
+                                            {{ $evenement->lieu }}
                                         @else
                                             <span class="text-muted">Non spécifié</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($formation->date < now())
-                                            <span class="badge bg-secondary">Terminée</span>
-                                        {{-- @elseif($formation->date->isToday())
+                                        @if($evenement->date < now())
+                                            <span class="badge bg-secondary">Passé</span>
+                                        @elseif($evenement->date->isToday())
                                             <span class="badge bg-warning text-dark">Aujourd'hui</span>
-                                        @elseif($formation->date->isTomorrow())
-                                            <span class="badge bg-info">Demain</span> --}}
+                                        @elseif($evenement->date->isTomorrow())
+                                            <span class="badge bg-info">Demain</span>
                                         @else
                                             <span class="badge bg-success">À venir</span>
                                         @endif
                                     </td>
                                     <td>
+                                        @if($evenement->agenda && is_array(json_decode($evenement->agenda, true)))
+                                            @php
+                                                $agenda = json_decode($evenement->agenda, true);
+                                                $totalSessions = collect($agenda)->sum(fn($day) => count($day));
+                                            @endphp
+                                            <span class="text-primary">{{ $totalSessions }} session(s)</span><br>
+                                            <small class="text-muted">{{ count($agenda) }} jour(s)</small>
+                                        @else
+                                            <span class="text-muted">Aucune session</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <a href="{{ route('formations.show', $formation) }}" 
-                                               class="btn btn-outline-orange" title="Voir">
+                                            <a href="{{ route('evenements.show', $evenement) }}" 
+                                               class="btn btn-outline-primary" title="Voir">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            @if (auth()->check() && auth()->user()->role == 'admin')
-                                            <a href="{{ route('formations.edit', $formation) }}" 
+                                            
+                                            <a href="{{ route('evenements.edit', $evenement) }}" 
                                                class="btn btn-outline-warning" title="Modifier">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <button type="button" class="btn btn-outline-danger" 
-                                                    onclick="deleteFormation({{ $formation->id }}, '{{ $formation->title }}')" 
+                                                    onclick="deleteEvent({{ $evenement->id }}, '{{ $evenement->titre }}')" 
                                                     title="Supprimer">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                            @else
-                                            <button type="button" class="btn btn-orange" title="S'inscrire">
-                                                <i class="fas fa-user-plus"></i>
-                                            </button>
-                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -335,11 +280,11 @@ Nos Formations
     </div>
 
     <!-- Pagination -->
-    @if(method_exists($formations, 'hasPages') && $formations->hasPages())
+    @if(method_exists($evenements, 'hasPages') && $evenements->hasPages())
         <div class="row mt-4">
             <div class="col-12">
                 <div class="d-flex justify-content-center">
-                    {{ $formations->links() }}
+                    {{ $evenements->links() }}
                 </div>
             </div>
         </div>
@@ -355,7 +300,7 @@ Nos Formations
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer la formation <strong id="formation-title"></strong> ?</p>
+                <p>Êtes-vous sûr de vouloir supprimer l'événement <strong id="event-title"></strong> ?</p>
                 <p class="text-danger"><small><i class="fas fa-exclamation-triangle"></i> Cette action est irréversible.</small></p>
             </div>
             <div class="modal-footer">
@@ -380,7 +325,7 @@ Nos Formations
         if (this.checked) {
             document.getElementById('grid-container').style.display = 'block';
             document.getElementById('list-container').style.display = 'none';
-            localStorage.setItem('formations-view', 'grid');
+            localStorage.setItem('events-view', 'grid');
         }
     });
 
@@ -388,23 +333,23 @@ Nos Formations
         if (this.checked) {
             document.getElementById('grid-container').style.display = 'none';
             document.getElementById('list-container').style.display = 'block';
-            localStorage.setItem('formations-view', 'list');
+            localStorage.setItem('events-view', 'list');
         }
     });
 
     // Restore saved view preference
     document.addEventListener('DOMContentLoaded', function() {
-        const savedView = localStorage.getItem('formations-view');
+        const savedView = localStorage.getItem('events-view');
         if (savedView === 'list') {
             document.getElementById('list-view').checked = true;
             document.getElementById('list-view').dispatchEvent(new Event('change'));
         }
     });
 
-    // Delete formation function
-    function deleteFormation(formationId, formationTitle) {
-        document.getElementById('formation-title').textContent = formationTitle;
-        document.getElementById('delete-form').action = `/formations/${formationId}`;
+    // Delete event function
+    function deleteEvent(eventId, eventTitle) {
+        document.getElementById('event-title').textContent = eventTitle;
+        document.getElementById('delete-form').action = `/evenements/${eventId}`;
         new bootstrap.Modal(document.getElementById('deleteModal')).show();
     }
 
@@ -417,6 +362,16 @@ Nos Formations
             }
         });
     }, 5000);
+
+    // Enhanced search functionality
+    let searchTimeout;
+    document.getElementById('search').addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            // You can implement live search here if needed
+            // For now, user needs to click the filter button
+        }, 500);
+    });
 
     // Date range validation
     document.getElementById('date_from').addEventListener('change', function() {
@@ -435,84 +390,19 @@ Nos Formations
         dateFrom.max = this.value;
     });
 </script>
-@endsection
 
-@section('styles')
 <style>
-    .logo {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-
-    .logo-bracket {
-        color: #333;
-    }
-
-    .logo-c {
-        color: #333;
-    }
-
-    .logo-s {
-        color: #ff8c00;
-    }
-
-    .logo-c2 {
-        color: #ffedaf;
-    }
-
-    .btn-orange {
-        background-color: #ff8c00;
-        border-color: #ff8c00;
-        color: white;
-    }
-
-    .btn-orange:hover {
-        background-color: #e07e00;
-        border-color: #e07e00;
-        color: white;
-    }
-
-    .btn-outline-orange {
-        color: #ff8c00;
-        border-color: #ff8c00;
-    }
-
-    .btn-outline-orange:hover {
-        background-color: #ff8c00;
-        border-color: #ff8c00;
-        color: white;
-    }
-
-    .text-orange {
-        color: #ff8c00;
-    }
-
-    .bg-orange {
-        background-color: #ff8c00;
-    }
-
-    .form-control:focus, .form-select:focus {
-        border-color: #ff8c00;
-        box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
-    }
-
-    .form-check-input:checked {
-        background-color: #ff8c00;
-        border-color: #ff8c00;
-    }
-
-    .formation-card {
+    .event-card {
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .formation-card:hover {
+    .event-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
     }
 
-    .bg-gradient-orange {
-        background: linear-gradient(135deg, #ff8c00, #e07e00);
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
     }
 
     .table th {
