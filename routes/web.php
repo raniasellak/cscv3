@@ -11,12 +11,6 @@ use App\Http\Controllers\ContactController;
 
 
 
-Route::get('/test-route', function() {
-    return "Test route works!";
-});
-Route::get('/', function () {
-    return view('welcome');
-});
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\InscriptionController;
@@ -40,6 +34,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/admin', function () {
@@ -80,12 +75,11 @@ Route::post('/chatbot', function (\Illuminate\Http\Request $request) {
 
     return response()->json(['reply' => "Désolé, je ne comprends pas cette question."]);
 });
-Route::get('/accueil', function () {
+Route::get('/   ', function () {
 return view('accueil');
 })->name('accueil');
 
 // Routes publiques
-Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
