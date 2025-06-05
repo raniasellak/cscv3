@@ -1,5 +1,3 @@
-user/layouts/app.blade.php
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -308,6 +306,11 @@ user/layouts/app.blade.php
                     <li class="nav-item">
                         <a class="nav-link" href="/formations"><i class="fas fa-graduation-cap me-1"></i>Formation</a>
                     </li>
+                     @if (auth()->check() && auth()->user()->role == 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard"><i class="fas fa-graduation-cap me-1"></i>Dashboard</a>
+                    </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="/about"><i class="fas fa-users me-1"></i>À propos</a>
                     </li>
@@ -388,11 +391,10 @@ user/layouts/app.blade.php
                                 avec des programmes adaptés à vos besoins.
                             </p>
                             <div class="social-icons">
-                                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                               
                                 <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                                <a href="https://www.linkedin.com/company/club-csc/posts/?feedView=all" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            
                             </div>
                         </div>
                     </div>

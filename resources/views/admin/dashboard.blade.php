@@ -1,5 +1,5 @@
-@extends('layouts.master')
 
+@extends('layouts.appdash')
 @section('title', 'Dashboard Admin')
 
 @section('content')

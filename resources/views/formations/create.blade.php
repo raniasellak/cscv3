@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appdash')
 
 @section('title', 'Créer une formation')
 

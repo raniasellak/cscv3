@@ -153,14 +153,21 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
 // Route d'envoi de newsletter par l'adminuse App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
 
 // Affichage de la page de gestion de la newsletter (formulaire + liste des inscrits)
-Route::get('/admin/newsletter', [NewsletterController::class, 'index'])
-    ->name('admin.newsletter')
-    ->middleware('auth');
+// Routes pour la newsletter
 
+use App\Http\Controllers\AdminNewsletterController;
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/newsletter', [AdminNewsletterController::class, 'index'])->name('admin.newsletter');
+    Route::post('/newsletter/send', [AdminNewsletterController::class, 'send'])->name('admin.newsletter.send');
+});
 // Envoi de la newsletter à tous les abonnés via le formulaire
-Route::post('/admin/newsletter/send', [AdminNewsletterController::class, 'send'])
-    ->name('admin.newsletter.send')
-    ->middleware('auth');
+
+
+    // Routes pour la newsletter (à ajouter dans routes/web.php)
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/newsletter', [AdminNewsletterController::class, 'index'])->name('admin.newsletter');
+    Route::post('/newsletter/send', [AdminNewsletterController::class, 'send'])->name('admin.newsletter.send');
+});
 
 
     Route::resource('members', MemberController::class);
@@ -175,3 +182,19 @@ use App\Http\Controllers\ChatbotController;
 Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot.index');
 Route::post('/chatbot/send', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
 Route::get('/chatbot/test', [ChatbotController::class, 'testOpenAI'])->name('chatbot.test');
+
+
+use App\Http\Controllers\PasswordResetController;
+
+// Routes pour réinitialisation de mot de passe
+Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+    
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+    
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])
+    ->name('password.reset');
+    
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])
+    ->name('password.update');

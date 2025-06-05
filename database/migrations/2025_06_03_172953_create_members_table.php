@@ -9,24 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        // Création de la table members
+    public function up()
+{
+    if (!Schema::hasTable('members')) {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('role');
             $table->text('description');
-            $table->string('image')->nullable(); // pour l'image
-            $table->timestamps(); // timestamps recommandés
-        });
-
-        // Création de la table categories
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
+    }
+
+        
+            
+    
     }
 
     /**
@@ -35,6 +33,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('members');
-        Schema::dropIfExists('categories');
+        
     }
 };

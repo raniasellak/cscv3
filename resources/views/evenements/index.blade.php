@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.appdash')
 
 @section('content')
 <div class="container-fluid">

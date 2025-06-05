@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appdash')
 
 @section('content')
     <h2>Membres du club</h2>
