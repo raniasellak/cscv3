@@ -196,6 +196,24 @@
         color: #ffa500;
     }
     
+    .forgot-password {
+        text-align: right;
+        margin-bottom: 20px;
+        margin-top: -10px;
+    }
+    
+    .forgot-password a {
+        color: #ff8c00;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+    
+    .forgot-password a:hover {
+        color: #ffa500;
+        text-decoration: underline;
+    }
+    
     .alert {
         border-radius: 12px;
         border: none;
@@ -235,7 +253,7 @@
                         <div class="person-illustration"></div>
                     </div>
                     <h3 style="position: relative; z-index: 2; color: #ff8c00;">Bienvenue au Computer Science Club !</h3>
-                    <p style="position: relative; z-index: 2; opacity: 0.9;">Connectez-vous à votre espace de savoir,d’innovation et de partage. </p>
+                    <p style="position: relative; z-index: 2; opacity: 0.9;">Connectez-vous à votre espace de savoir,d'innovation et de partage. </p>
                 </div>
             </div>
             
@@ -287,6 +305,14 @@
                             <div class="input-icon">
                                 <i class="fas fa-lock"></i>
                             </div>
+                        </div>
+
+                        <!-- Lien mot de passe oublié -->
+                        <div class="forgot-password">
+                            <a href="{{ route('password.request') }}">
+                                <i class="fas fa-question-circle me-1"></i>
+                                Mot de passe oublié ?
+                            </a>
                         </div>
 
                         <div class="form-group">

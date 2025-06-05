@@ -1,4 +1,7 @@
-@extends('layouts.master')
+
+@extends('user.layouts.app')
+
+
 @section('title', 'Contactez-nous')
 
 @section('content')
@@ -421,11 +424,7 @@
                 <a href="#"><i class="fab fa-github"></i></a>
             </div>
         </div>
-        
-        <div class="chatbot-block">
-            <h3 class="chatbot-title">Chatbot CSC</h3>
-            <p>Posez vos questions à notre assistant virtuel pour obtenir des réponses rapides.</p>
-        </div>
+       
         
         <!-- Google Maps Iframe -->
         <div class="map-container">
@@ -491,13 +490,7 @@
             </form>
             
             <!-- Call-to-action secondaire: Newsletter -->
-            <div class="cta-container">
-                <h4 class="cta-title">Restez informé(e) de nos actualités</h4>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Votre adresse email" required>
-                    <button type="submit">S'abonner</button>
-                </form>
-            </div>
+          
         </div>
         
         <!-- FAQ Tab -->

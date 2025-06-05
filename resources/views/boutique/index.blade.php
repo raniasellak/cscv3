@@ -335,11 +335,7 @@
         </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 CSC Boutique - Tous droits réservés</p>
-        </div>
-    </footer>
+   
 
     <script>
         // Gestion des favoris

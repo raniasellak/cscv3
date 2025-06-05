@@ -6,9 +6,15 @@
     <title>@yield('title', 'Admin Dashboard')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --orange-color: #FF6B00;
+            --black-color: #000000;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,23 +25,113 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa;
             color: #2c3e50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: var(--black-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1050;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--orange-color) !important;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--orange-color) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--orange-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-toggler {
+            border-color: var(--orange-color);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 107, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .logout-btn {
+            background-color: var(--orange-color);
+            color: white !important;
+            border-radius: 20px;
+            padding: 6px 15px !important;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #ff8c33;
+            transform: translateY(-2px);
         }
         
         /* Sidebar Styles */
         #sidebar {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            min-height: 100vh;
+            height: calc(100vh - 76px);
             position: fixed;
             left: 0;
-            top: 0;
+            top: 76px;
             width: 280px;
             transition: all 0.3s ease;
             z-index: 1000;
             box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            overflow-x: hidden;
         }
         
         #sidebar.collapsed {
             width: 80px;
+        }
+        
+        /* Scrollbar customization for sidebar */
+        #sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #sidebar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        #sidebar::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 10px;
+        }
+        
+        #sidebar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #ff8c33, #ffb84d);
         }
         
         .sidebar-header {
@@ -78,7 +174,7 @@
             margin: 5px 15px;
         }
         
-        .nav-link {
+        .sidebar .nav-link {
             display: flex;
             align-items: center;
             padding: 12px 20px;
@@ -88,21 +184,26 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            margin: 0;
+        }
+
+        .sidebar .nav-link::after {
+            display: none;
         }
         
-        .nav-link:hover {
+        .sidebar .nav-link:hover {
             background: rgba(255, 255, 255, 0.1);
             color: white;
             transform: translateX(5px);
         }
         
-        .nav-link.active {
+        .sidebar .nav-link.active {
             background: linear-gradient(45deg, #ff6b35, #f7931e);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
         }
         
-        .nav-link i {
+        .sidebar .nav-link i {
             font-size: 1.2rem;
             margin-right: 15px;
             width: 20px;
@@ -112,8 +213,10 @@
         /* Main Content */
         .main-content {
             margin-left: 280px;
+            margin-top: 76px;
             transition: all 0.3s ease;
-            min-height: 100vh;
+            min-height: calc(100vh - 76px);
+            flex: 1;
         }
         
         .main-content.expanded {
@@ -198,6 +301,10 @@
             .main-content {
                 margin-left: 0;
             }
+
+            .search-box {
+                width: 200px;
+            }
         }
         
         /* Alert Customization */
@@ -229,8 +336,45 @@
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">CSC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Accueil</a>
+                    </li>
+                    @if (auth()->check() && auth()->user()->role == 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard"><i class="fas fa-tachometer-alt me-1"></i>Dashboard</a>
+                    </li>
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formations"><i class="fas fa-graduation-cap me-1"></i>Formation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/evenements"><i class="fas fa-calendar-alt me-1"></i>Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about"><i class="fas fa-users me-1"></i>À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('boutique.index') }}"><i class="fas fa-shopping-cart me-1"></i>Boutique</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a class="nav-link logout-btn" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt me-1"></i>Déconnexion</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- Sidebar -->
-    <div id="sidebar">
+    <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
@@ -289,9 +433,9 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/members">
                     <i class="bi bi-geo-alt"></i>
-                    <span class="sidebar-text">Maps</span>
+                    <span class="sidebar-text">Gestion des membres</span>
                 </a>
             </div>
             <div class="nav-item">
@@ -300,11 +444,17 @@
                     <span class="sidebar-text">Ajouter des membres</span>
                 </a>
             </div>
-           
             <div class="nav-item">
                 <a class="nav-link" href="{{ route('admin.products.create') }}">
                     <i class="bi bi-bag-plus"></i>
                     <span class="sidebar-text">Ajouter un produit</span>
+                </a>
+            </div>
+
+              <div class="nav-item">
+                <a class="nav-link" href="/products">
+                    <i class="bi bi-bag-plus"></i>
+                    <span class="sidebar-text">Gestion des produits</span>
                 </a>
             </div>
             <div class="nav-item">
@@ -451,6 +601,16 @@
                 sidebar.classList.add('collapsed');
                 mainContent.classList.add('expanded');
             }
+
+            // Auto-hide alerts after 5 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    if (alert && alert.classList.contains('show')) {
+                        alert.classList.remove('show');
+                    }
+                }, 5000);
+            });
         });
     </script>
 </body>

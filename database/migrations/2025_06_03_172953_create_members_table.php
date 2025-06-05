@@ -9,16 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('contacts', function (Blueprint $table) {
+    public function up()
+{
+    if (!Schema::hasTable('members')) {
+        Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('subject')->nullable(); // Ajout du champ sujet
-            $table->text('message');
+            $table->string('role');
+            $table->text('description');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
+    }
+
+        
+            
+    
     }
 
     /**
@@ -26,6 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('members');
+        
     }
 };

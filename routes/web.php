@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductController;
 
 
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\MemberController;
 
 
 use App\Http\Controllers\HomeController;
@@ -57,25 +57,9 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::post('/chatbot', function (\Illuminate\Http\Request $request) {
-    $message = strtolower($request->input('message'));
 
-    $reponses = [
-        'quand le club a-t-il été fondé ?' => 'Le CSC a été fondé en 2025.',
-        'quelles sont les cellules du club ?' => 'Les cellules sont : Développement, Cybersécurité et Intelligence Artificielle.',
-        'qui fait partie du grand bureau ?' => 'Le grand bureau comprend le président, vice-président, secrétaire général, trésorier général, responsable communication, formation et design.',
-        'quelle est la mission du club ?' => "Notre mission est d'encourager l'innovation, l'apprentissage et la collaboration en informatique."
-    ];
 
-    foreach ($reponses as $question => $reponse) {
-        if (str_contains($message, strtolower($question))) {
-            return response()->json(['reply' => $reponse]);
-        }
-    }
-
-    return response()->json(['reply' => "Désolé, je ne comprends pas cette question."]);
-});
-Route::get('/   ', function () {
+Route::get('/accueil', function () {
 return view('accueil');
 })->name('accueil');
 
@@ -163,11 +147,48 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
 // Route d'envoi de newsletter par l'adminuse App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
 
 // Affichage de la page de gestion de la newsletter (formulaire + liste des inscrits)
-Route::get('/admin/newsletter', [NewsletterController::class, 'index'])
-    ->name('admin.newsletter')
-    ->middleware('auth');
+// Routes pour la newsletter
 
+use App\Http\Controllers\AdminNewsletterController;
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/newsletter', [AdminNewsletterController::class, 'index'])->name('admin.newsletter');
+    Route::post('/newsletter/send', [AdminNewsletterController::class, 'send'])->name('admin.newsletter.send');
+});
 // Envoi de la newsletter à tous les abonnés via le formulaire
-Route::post('/admin/newsletter/send', [AdminNewsletterController::class, 'send'])
-    ->name('admin.newsletter.send')
-    ->middleware('auth');
+
+
+    // Routes pour la newsletter (à ajouter dans routes/web.php)
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/newsletter', [AdminNewsletterController::class, 'index'])->name('admin.newsletter');
+    Route::post('/newsletter/send', [AdminNewsletterController::class, 'send'])->name('admin.newsletter.send');
+});
+
+
+    Route::resource('members', MemberController::class);
+
+
+    use App\Http\Controllers\FrontendController;
+
+Route::get('/about', [FrontendController::class, 'about'])->name('about');
+use App\Http\Controllers\ChatbotController;
+
+// Routes pour le chatbot
+Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot.index');
+Route::post('/chatbot/send', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
+Route::get('/chatbot/test', [ChatbotController::class, 'testOpenAI'])->name('chatbot.test');
+
+
+use App\Http\Controllers\PasswordResetController;
+
+// Routes pour réinitialisation de mot de passe
+Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+    
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+    
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])
+    ->name('password.reset');
+    
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])
+    ->name('password.update');

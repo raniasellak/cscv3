@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title', 'Choix du paiement')
 @section('content')
 <div class="container" style="max-width:600px; margin:auto;">

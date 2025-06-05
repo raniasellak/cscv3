@@ -1,0 +1,99 @@
+{
+  "club": {
+    "nom": "Computer Science Club (CSC)",
+    "creation": 2024,
+    "localisation": "Faculté des Sciences et Techniques Gueliz, Marrakech",
+    "langues": ["Français", "Anglais"],
+    "membres_actifs": 50,
+    "public_vise": "Étudiants DEUST, Licence, Master, Cycle Ingénieur, et passionnés d’informatique"
+  },
+  "mission": "Promouvoir la culture informatique et organiser des événements techniques, formations, et activités liées aux nouvelles technologies.",
+  "objectifs": [
+    "Développer les compétences techniques des étudiants",
+    "Encourager le travail en équipe",
+    "Organiser des événements ouverts à tous les passionnés d’informatique"
+  ],
+  "vision": "Devenir un acteur incontournable de la scène tech universitaire au Maroc d’ici 1 à 2 ans, avec un grand événement national annuel, des partenariats IT, et une plateforme de ressources en ligne.",
+  "activites": [
+    "Formations (programmation, cybersécurité, IA...)",
+    "Workshops",
+    "Hackathons",
+    "Conférences et séminaires",
+    "Compétitions techniques"
+  ],
+  "structure": {
+    "bureau_central": {
+      "president": "Hatim Abahri",
+      "vice_president": "Abdessamad lmider",
+      "secretaire": "Mohmmed El Mehdaoui",
+      "chef_communication": "Souhaib"
+    },
+    "cyber_security": {
+      "dirige": "Hiba El Hjouji",
+      "vice_presidente": "Hajar Boudhih",
+      "tresorier": "Yassir Nacir",
+      "secretaire": "Rania Sellak",
+      "chef_formation": "Amina ID EL KADI",
+      "chef_communication": "MAZZI Mouad",
+      "designer": "Elmouden Ali",
+      "multi_media": "Hajar Chaira",
+      "membres": "Étudiants SIT et Licence Cybersécurité"
+    },
+    "developpement": {
+      "dirige": "Mohmmed El Allali",
+      "tresorier": "Hajar EL Asri",
+      "secretaire": "Noura Lamzara",
+      "chef_formation": "Omar Boudaden",
+      "chef_communication": "Mouad Modnibi",
+      "designer": "Abdlilah Erraguibi",
+      "membres": "Étudiants IRISI"
+    },
+    "intelligence_artificielle": {
+      "dirige": "Mohammed Ezzaim",
+      "tresorier": "Fatima Ezzahra Omari",
+      "secretaire_generale": "Nouhaila Hammia",
+      "chef_formations_projets": "Ismail chafai",
+      "chef_communication_designer": ["Bajadi Mohammed", "Elkyoud Mohammed"],
+      "chef_evenements": "Hajar Kouch",
+      "membres": "Étudiants IAII"
+    }
+  },
+  "faq": [
+    {
+      "question": "Est-ce qu’il faut avoir des compétences techniques pour rejoindre ?",
+      "reponse": "Non, le club est justement là pour vous aider à développer vos compétences !"
+    },
+    {
+      "question": "Les activités sont-elles gratuites ?",
+      "reponse": "Oui, toutes les activités sont gratuites pour les étudiants."
+    },
+    {
+      "question": "Combien d’heures par semaine faut-il consacrer ?",
+      "reponse": "En moyenne 2 à 3 heures pour les formations hebdomadaires, avec un grand événement à la fin de l’année."
+    }
+  ],
+  "temoignages": [
+    {
+      "auteur": "Hiba",
+      "texte": "Grâce au CSC, j'ai découvert la cybersécurité et obtenu mon premier stage !"
+    },
+    {
+      "auteur": "Ibtissam",
+      "texte": "Participer aux workshops m’a permis d’améliorer mes compétences en développement web tout en rencontrant des étudiants passionnés."
+    },
+    {
+      "auteur": "Ismail",
+      "texte": "L’ambiance des hackathons est incroyable. On apprend énormément tout en s’amusant !"
+    }
+  ],
+  "contact": {
+    "email": "csclubofficiel@gmail.com",
+    "linkedin": "CSC Club",
+    "instagram": "csc.club"
+  },
+  "recrutement": "Le recrutement a lieu chaque année à la rentrée universitaire via un formulaire en ligne suivi d’un petit entretien de motivation.",
+  "evenements_recents": [
+    "Workshop « Introduction To Cyber Security » – janvier 2025",
+    "Formation Spring Boot – février 2025"
+  ]
+}
