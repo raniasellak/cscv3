@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.app')
 <style>@media (min-width: 1025px) {
 .h-custom {
 height: 100vh !important;

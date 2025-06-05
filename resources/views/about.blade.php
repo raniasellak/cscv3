@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'layouts.master')
 
 @section('title', 'À propos du CSC')
 

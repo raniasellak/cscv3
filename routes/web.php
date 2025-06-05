@@ -35,6 +35,9 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/user/index', function () {
+    return view('user.index');
+})->name('user.index')->middleware('auth');
 
 
 Route::get('/admin', function () {
@@ -47,9 +50,6 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard')->middleware('auth');
 
-Route::get('/user/index', function () {
-    return view('user.index');
-})->name('user.index')->middleware('auth');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');

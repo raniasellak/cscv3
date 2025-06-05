@@ -301,10 +301,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-home me-1"></i>Accueil</a>
+                        <a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/formations"><i class="fas fa-graduation-cap me-1"></i>Formation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/evenements"><i class="fas fa-calendar-alt me-1"></i>Events</a>
                     </li>
                      @if (auth()->check() && auth()->user()->role == 'admin')
                     <li class="nav-item">
@@ -404,10 +407,11 @@
                         <div class="footer-section">
                             <h5>Liens Rapides</h5>
                             <ul>
-                                <li><a href="{{ route('user.index') }}">Accueil</a></li>
+                                <li><a href="/">Accueil</a></li>
                                 <li><a href="/formations">Formations</a></li>
+                                <li><a href="/evenements">Events</a></li>
                                 <li><a href="{{ route('boutique.index') }}">Boutique</a></li>
-                                <li><a href="#">À propos</a></li>
+                                <li><a href="/about">À propos</a></li>
                                 <li><a href="{{ route('contact.show') }}">Contact</a></li>
                             </ul>
                         </div>
@@ -418,7 +422,7 @@
                         <div class="footer-section">
                             <h5>Nos Services</h5>
                             <ul>
-                                <li><a href="#">Formation en ligne</a></li>
+                                <li><a href="#fo">Formation en ligne</a></li>
                                 <li><a href="#">Certification</a></li>
                                 <li><a href="#">Coaching</a></li>
                                 <li><a href="#">Consultation</a></li>

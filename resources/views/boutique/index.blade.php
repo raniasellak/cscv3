@@ -1,4 +1,7 @@
+
 @extends('user.layouts.boutique')
+
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.app')
 
 @section('content')
 <style>

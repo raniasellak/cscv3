@@ -1,4 +1,4 @@
-@extends('layouts.appdash')
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.app')
 
 @section('content')
 <div class="container-fluid">
