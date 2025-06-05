@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.app')
 
 @section('content')
 <div class="container" style="max-width:600px; margin:auto;">

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(view: 'layouts.appdash')
 
 @section('title')
 Modifier la formation

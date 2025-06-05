@@ -381,7 +381,7 @@
                     <div class="me-3">
                         <i class="bi bi-shield-check text-warning" style="font-size: 2rem;"></i>
                     </div>
-                    <h5 class="logo-text mb-0 sidebar-text">KaiAdmin</h5>
+                    <h5 class="logo-text mb-0 sidebar-text">CSC Club</h5>
                 </div>
                 <button class="toggle-btn" id="toggle-btn">
                     <i class="bi bi-list"></i>
@@ -421,15 +421,15 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-ui-checks"></i>
-                    <span class="sidebar-text">Forms</span>
+                <a class="nav-link" href="/evenements">
+                    <i class="bi bi-table"></i>
+                    <span class="sidebar-text">Events</span>
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-table"></i>
-                    <span class="sidebar-text">Tables</span>
+                <a class="nav-link" href="/evenements/create">
+                    <i class="bi bi-ui-checks"></i>
+                    <span class="sidebar-text">Create Event</span>
                 </a>
             </div>
             <div class="nav-item">

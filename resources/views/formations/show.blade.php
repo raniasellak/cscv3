@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.app')
 
 @section('title', $formation->title . ' - CSC Formations')
 
