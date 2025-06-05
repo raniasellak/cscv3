@@ -3,55 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
-
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher la liste des produits.
      */
     public function index()
     {
-        $products = Product::query()->paginate(1); // Correction ici
-        return view('admin.products.index', compact('products')); // Correction ici
+        $products = Product::paginate(10); // Tu peux ajuster le nombre
+        return view('admin.products.index', compact('products'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Afficher le formulaire de création.
      */
     public function create()
     {
         $product = new Product();
-        return view('admin.products.create', compact('product')); // Correction ici
+        $categories = Category::all();
+        return view('admin.products.create', compact('product', 'categories'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Enregistrer un nouveau produit.
      */
- public function store(ProductRequest $request) {
-    // Validate the request data
-    $formFields = $request->validated();
-    
-    // Check if an image file is uploaded
-    if ($request->hasFile('image')) {
-        // Store the image in the 'public/product' directory
-        $formFields['image'] = $request->file('image')->store('product', 'public');
+    public function store(ProductRequest $request)
+    {
+        $formFields = $request->validated();
+
+        // Gestion de l'image
+        if ($request->hasFile('image')) {
+            $formFields['image'] = $request->file('image')->store('product', 'public');
+        }
+
+        // Création du produit
+        Product::create($formFields);
+
+        return redirect()->route('admin.products.index')->with('success', 'Produit ajouté avec succès.');
     }
-    
-    // Create the product in the database
-    Product::create($formFields);
-    
-    // Redirect back to the product list with a success message
-    return redirect()->route('admin.products.index')->with('success', 'Produit ajouté avec succès.');
-}
-
-
-    
 
     /**
-     * Display the specified resource.
+     * Afficher un produit spécifique.
      */
     public function show(Product $product)
     {
@@ -59,23 +55,24 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Afficher le formulaire d'édition.
      */
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Mettre à jour un produit existant.
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $formFields = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
+        $formFields = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $formFields['image'] = $request->file('image')->store('product', 'public');
+        }
 
         $product->update($formFields);
 
@@ -83,7 +80,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprimer un produit.
      */
     public function destroy(Product $product)
     {

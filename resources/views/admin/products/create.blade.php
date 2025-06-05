@@ -50,6 +50,12 @@
                             @enderror
                         </div>
                     </div>
+                    <select name="category_id" required>
+    @foreach($categories as $category)
+        <option value="{{ $category->id }}">{{ $category->name }}</option>
+    @endforeach
+</select>
+
                     
                     <div class="col-md-6">
                         <div class="mb-3">
