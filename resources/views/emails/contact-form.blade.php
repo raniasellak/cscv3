@@ -53,7 +53,7 @@
 <body>
     <div class="header">
         <h1>Nouveau Message de Contact</h1>
-        <p>CSC University</p>
+        <p>CSC Club</p>
     </div>
     
     <div class="content">
@@ -80,7 +80,7 @@
     </div>
     
     <div class="footer">
-        <p>Ce message a été envoyé depuis le formulaire de contact du site CSC University.</p>
+        <p>Ce message a été envoyé depuis le formulaire de contact du site CSC CLUB.</p>
         <p>Vous pouvez répondre directement à cet email pour contacter {{ $name }}.</p>
     </div>
 </body>

@@ -143,4 +143,5 @@ class PasswordResetController extends Controller
 
         return redirect('/login')->with('success', 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.');
     }
+    
 }

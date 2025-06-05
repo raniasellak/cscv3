@@ -386,15 +386,15 @@
         <div class="info-item">
             <i class="fas fa-map-marker-alt"></i>
             <div>
-                <p>Université Mohammed V, Faculté des Sciences</p>
-                <p>Avenue Ibn Battouta, Rabat</p>
+                <p>Computer Science Club</p>
+                <p>Faculté des Sciences et Thechniques , Marrakech</p>
             </div>
         </div>
         
         <div class="info-item">
             <i class="fas fa-envelope"></i>
             <div>
-                <p>contact@csc-university.ma</p>
+                <p>cscclubfstg@gmail.com</p>
             </div>
         </div>
         
@@ -406,15 +406,7 @@
         </div>
         
         <!-- Heures d'ouverture -->
-        <div class="hours-container">
-            <h3 class="hours-title">Heures d'ouverture</h3>
-            <ul class="hours-list">
-                <li><span>Lundi - Vendredi:</span> <span>9h00 - 17h00</span></li>
-                <li><span>Samedi:</span> <span>9h00 - 12h00</span></li>
-                <li><span>Dimanche:</span> <span>Fermé</span></li>
-            </ul>
-        </div>
-        
+       
         <div class="social-links">
             <h3>Suivez-nous</h3>
             <div class="social-icons">
@@ -500,51 +492,43 @@
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Comment puis-je m'inscrire à l'université ?</span>
+                        <span>C'est qui le président de grand bureau de CSC' ?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Pour vous inscrire à l'université, vous devez vous rendre sur le portail des inscriptions en ligne et suivre les étapes indiquées. Vous devrez fournir vos informations personnelles, vos résultats scolaires et choisir votre filière d'études.</p>
+                        <p>Hatim Abahri.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Quels sont les horaires d'ouverture du secrétariat ?</span>
+                        <span>C'est qui Chef de Cellule de cyber security de CSC' ?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Le secrétariat est ouvert du lundi au vendredi de 9h00 à 17h00 et le samedi de 9h00 à 12h00. Il est fermé les dimanches et jours fériés.</p>
+                        <p>Hiba El houji.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Comment puis-je obtenir un relevé de notes ?</span>
+                        <span>C'est qui Chef de Cellule de IA de CSC' ?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Pour obtenir un relevé de notes, vous pouvez faire une demande en ligne via votre espace étudiant ou vous présenter au secrétariat de votre département avec votre carte d'étudiant.</p>
+                        <p>Mohammed Ezzaim.</p>
                     </div>
                 </div>
                 
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Quelles sont les modalités de paiement des frais d'inscription ?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Les frais d'inscription peuvent être réglés par virement bancaire, carte bancaire en ligne via notre plateforme sécurisée, ou en espèces à l'agence comptable de l'université.</p>
-                    </div>
-                </div>
                 
+    
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Comment puis-je contacter un professeur ?</span>
+                        <span>Comment puis-je contacter la secritaire de la cellule de cybersécurité ?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Vous pouvez contacter vos professeurs via leur adresse email universitaire ou pendant leurs heures de permanence. Les coordonnées des enseignants sont disponibles sur le site web de chaque département.</p>
+                        <p>vous pouvez les contacter d'aprés son linkedin Rania Sellak.</p>
                     </div>
                 </div>
             </div>
@@ -560,9 +544,9 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="team-info">
-                        <h4>Mohammed Alaoui</h4>
+                        <h4>Hajar El asri</h4>
                         <p>Responsable des admissions</p>
-                        <p>m.alaoui@csc-university.ma</p>
+                        <p>hajarelasri@gmail.com</p>
                     </div>
                 </div>
                 
@@ -571,9 +555,9 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="team-info">
-                        <h4>Fatima Bensouda</h4>
+                        <h4>Rania sellak</h4>
                         <p>Secrétaire générale</p>
-                        <p>f.bensouda@csc-university.ma</p>
+                        <p>ranyasellak@gmail.com</p>
                     </div>
                 </div>
                 
@@ -582,23 +566,13 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="team-info">
-                        <h4>Youssef Lahlou</h4>
+                        <h4>hiba el hjouji</h4>
                         <p>Support technique</p>
-                        <p>y.lahlou@csc-university.ma</p>
+                        <p>hibaelhjouji@gmail.com</p>
                     </div>
                 </div>
                 
-                <div class="team-member">
-                    <div class="team-photo">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="team-info">
-                        <h4>Nawal Chraibi</h4>
-                        <p>Relations internationales</p>
-                        <p>n.chraibi@csc-university.ma</p>
-                    </div>
-                </div>
-            </div>
+               
             
             <div class="privacy-note">
                 <p>Notre équipe s'engage à vous répondre dans un délai de 48 heures ouvrables. Pour les demandes urgentes, nous vous recommandons de nous contacter par téléphone.</p>
@@ -612,21 +586,7 @@
     <i class="fas fa-comments"></i>
 </div>
 
-<!-- Chat Modal -->
-<div class="modal fade" id="chatModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Chatbot CSC</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <textarea class="form-control mb-3" rows="3" placeholder="Votre message..."></textarea>
-                <button type="button" class="btn-send w-100">Envoyer le message</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>

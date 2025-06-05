@@ -1,4 +1,4 @@
-@extends('layouts.appdash')
+@extends('user.layouts.app')
 
 @section('title')
 Nos Formations
