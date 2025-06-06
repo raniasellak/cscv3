@@ -45,7 +45,7 @@ class FormationController extends Controller
         'formateur_email' => 'required|email',
         'date' => 'required|date',
         'contenu' => 'nullable|string',
-        'support_course' => 'nullable|file|mimes:pdf,docx|max:2048',
+        'support_course' => 'nullable|file|mimes:pdf,docx|max:12048',
     ]);
     $supportPath = null;
 

@@ -82,7 +82,7 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-light">
                     <h4 class="mb-0 text-orange">
-                        <i class="fas fa-info-circle me-2"></i>Description
+                        <i class="fas fa-info-circle me-2"></i>Thématique
                     </h4>
                 </div>
                 <div class="card-body">

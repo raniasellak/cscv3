@@ -1,506 +1,320 @@
-
 @extends('layouts.appdash')
-@section('title', 'Dashboard Admin')
+
+@section('title', 'Dashboard')
 
 @section('content')
-<style>
-    .stats-card {
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        border: none;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        position: relative;
-    }
-    
-    .stats-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    }
-    
-    .stats-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(45deg, #ff6b35, #f7931e);
-    }
-    
-    .stats-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        color: white;
-        margin-bottom: 15px;
-    }
-    
-    .stats-number {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #2c3e50;
-        margin-bottom: 5px;
-    }
-    
-    .stats-label {
-        color: #6c757d;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .stats-change {
-        font-size: 0.8rem;
-        padding: 4px 8px;
-        border-radius: 20px;
-        font-weight: 600;
-    }
-    
-    .stats-change.positive {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    
-    .stats-change.negative {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-    
-    .chart-card {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-    }
-    
-    .chart-header {
-        padding: 25px 25px 15px;
-        border-bottom: 1px solid #eee;
-        background: #f8f9fa;
-    }
-    
-    .chart-body {
-        padding: 25px;
-    }
-    
-    .recent-activities {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-    }
-    
-    .activity-item {
-        padding: 15px 25px;
-        border-bottom: 1px solid #f1f1f1;
-        display: flex;
-        align-items: center;
-    }
-    
-    .activity-item:last-child {
-        border-bottom: none;
-    }
-    
-    .activity-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 15px;
-        font-size: 1rem;
-        color: white;
-    }
-    
-    .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 30px;
-        border-radius: 15px;
-        margin-bottom: 30px;
-    }
-    
-    .btn-custom {
-        background: linear-gradient(45deg, #ff6b35, #f7931e);
-        color: white;
-        border: none;
-        padding: 10px 25px;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
-        color: white;
-    }
-    
-    .btn-outline-custom {
-        border: 2px solid #ff6b35;
-        color: #ff6b35;
-        background: transparent;
-        padding: 8px 20px;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-outline-custom:hover {
-        background: #ff6b35;
-        color: white;
-    }
-    
-    .progress-custom {
-        height: 8px;
-        border-radius: 10px;
-        background-color: #e9ecef;
-        overflow: hidden;
-    }
-    
-    .progress-bar-custom {
-        background: linear-gradient(45deg, #ff6b35, #f7931e);
-        border-radius: 10px;
-        transition: width 0.6s ease;
-    }
-</style>
-
-<!-- Page Header -->
-<div class="page-header">
-    <div class="d-flex justify-content-between align-items-center">
+<div class="container-fluid">
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         <div>
-            <h2 class="mb-2">Tableau de Bord</h2>
-            <p class="mb-0 opacity-75">Bienvenue dans votre espace d'administration</p>
-        </div>
-        <div>
-            <button class="btn btn-light me-2">
-                <i class="bi bi-download me-2"></i>Exporter
-            </button>
-            <button class="btn btn-custom">
-                <i class="bi bi-plus-circle me-2"></i>Nouveau
-            </button>
+            <span class="text-muted">{{ \Carbon\Carbon::now()->format('l, d F Y') }}</span>
         </div>
     </div>
-</div>
 
-<!-- Statistics Cards -->
-<div class="row g-4 mb-4">
-    <div class="col-xl-3 col-md-6">
-        <div class="stats-card">
-            <div class="stats-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
-                <i class="bi bi-people"></i>
-            </div>
-            <div class="stats-number">1,294</div>
-            <div class="stats-label">Visiteurs</div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <span class="stats-change positive">+12%</span>
-                <small class="text-muted">ce mois</small>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-xl-3 col-md-6">
-        <div class="stats-card">
-            <div class="stats-icon" style="background: linear-gradient(45deg, #ff6b35, #f7931e);">
-                <i class="bi bi-person-check"></i>
-            </div>
-            <div class="stats-number">1,303</div>
-            <div class="stats-label">Abonnés</div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <span class="stats-change positive">+8%</span>
-                <small class="text-muted">ce mois</small>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-xl-3 col-md-6">
-        <div class="stats-card">
-            <div class="stats-icon" style="background: linear-gradient(45deg, #56ab2f, #a8e6cf);">
-                <i class="bi bi-cash-stack"></i>
-            </div>
-            <div class="stats-number">€1,345</div>
-            <div class="stats-label">Ventes</div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <span class="stats-change positive">+15%</span>
-                <small class="text-muted">ce mois</small>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-xl-3 col-md-6">
-        <div class="stats-card">
-            <div class="stats-icon" style="background: linear-gradient(45deg, #ff758c, #ff7eb3);">
-                <i class="bi bi-bag-check"></i>
-            </div>
-            <div class="stats-number">576</div>
-            <div class="stats-label">Commandes</div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <span class="stats-change negative">-3%</span>
-                <small class="text-muted">ce mois</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Charts Section -->
-<div class="row g-4 mb-4">
-    <div class="col-xl-8">
-        <div class="chart-card">
-            <div class="chart-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Statistiques des Utilisateurs</h5>
-                    <div>
-                        <button class="btn btn-outline-custom btn-sm me-2">
-                            <i class="bi bi-download me-1"></i>Export
-                        </button>
-                        <button class="btn btn-outline-custom btn-sm">
-                            <i class="bi bi-printer me-1"></i>Imprimer
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="chart-body">
-                <div style="height: 300px; background: linear-gradient(45deg, #f8f9fa, #e9ecef); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <div class="text-center text-muted">
-                        <i class="bi bi-bar-chart" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                        <p class="mb-0">Graphique des statistiques</p>
-                        <small>Intégrer Chart.js ou ApexCharts ici</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-xl-4">
-        <div class="chart-card">
-            <div class="chart-header" style="background: linear-gradient(45deg, #ff6b35, #f7931e); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Ventes Quotidiennes</h5>
-                    <div class="dropdown">
-                        <button class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-                            Export
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">PDF</a></li>
-                            <li><a class="dropdown-item" href="#">Excel</a></li>
-                            <li><a class="dropdown-item" href="#">CSV</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="chart-body">
-                <div class="mb-3">
-                    <small class="text-muted">25 Mars - 02 Avril</small>
-                    <h2 class="text-primary fw-bold">€4,578.58</h2>
-                </div>
-                <div style="height: 120px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                    <small class="text-muted">Mini graphique</small>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="mb-0">17</h4>
-                        <small class="text-muted">Commandes</small>
-                    </div>
-                    <div class="text-success fw-bold">
-                        <i class="bi bi-arrow-up"></i> +5%
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Recent Activities -->
-<div class="row g-4">
-    <div class="col-xl-6">
-        <div class="recent-activities">
-            <div class="chart-header">
-                <h5 class="mb-0">Activités Récentes</h5>
-            </div>
-            <div class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
-                    <i class="bi bi-person-plus"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">Nouvel utilisateur inscrit</div>
-                    <small class="text-muted">Marie Dubois s'est inscrite</small>
-                </div>
-                <small class="text-muted">Il y a 2h</small>
-            </div>
-            <div class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(45deg, #ff6b35, #f7931e);">
-                    <i class="bi bi-bag-plus"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">Nouvelle commande</div>
-                    <small class="text-muted">Commande #1234 - €145.50</small>
-                </div>
-                <small class="text-muted">Il y a 4h</small>
-            </div>
-            <div class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(45deg, #56ab2f, #a8e6cf);">
-                    <i class="bi bi-check-circle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">Formation terminée</div>
-                    <small class="text-muted">Formation "Laravel Avancé" complétée</small>
-                </div>
-                <small class="text-muted">Il y a 6h</small>
-            </div>
-            <div class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(45deg, #ff758c, #ff7eb3);">
-                    <i class="bi bi-envelope"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">Newsletter envoyée</div>
-                    <small class="text-muted">1,250 destinataires</small>
-                </div>
-                <small class="text-muted">Il y a 1j</small>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-xl-6">
-        <div class="recent-activities">
-            <div class="chart-header">
-                <h5 class="mb-0">Progression des Objectifs</h5>
-            </div>
-            <div class="activity-item">
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold">Ventes Mensuelles</span>
-                        <span class="text-muted">75%</span>
-                    </div>
-                    <div class="progress-custom">
-                        <div class="progress-bar-custom" style="width: 75%"></div>
-                    </div>
-                    <small class="text-muted mt-1">€7,500 / €10,000</small>
-                </div>
-            </div>
-            <div class="activity-item">
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold">Nouveaux Clients</span>
-                        <span class="text-muted">60%</span>
-                    </div>
-                    <div class="progress-custom">
-                        <div class="progress-bar-custom" style="width: 60%; background: linear-gradient(45deg, #667eea, #764ba2);"></div>
-                    </div>
-                    <small class="text-muted mt-1">120 / 200</small>
-                </div>
-            </div>
-            <div class="activity-item">
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold">Formations Complétées</span>
-                        <span class="text-muted">85%</span>
-                    </div>
-                    <div class="progress-custom">
-                        <div class="progress-bar-custom" style="width: 85%; background: linear-gradient(45deg, #56ab2f, #a8e6cf);"></div>
-                    </div>
-                    <small class="text-muted mt-1">42 / 50</small>
-                </div>
-            </div>
-            <div class="activity-item">
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold">Satisfaction Client</span>
-                        <span class="text-muted">92%</span>
-                    </div>
-                    <div class="progress-custom">
-                        <div class="progress-bar-custom" style="width: 92%; background: linear-gradient(45deg, #ff758c, #ff7eb3);"></div>
-                    </div>
-                    <small class="text-muted mt-1">4.6 / 5.0 étoiles</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Quick Actions -->
-<div class="row g-4 mt-4">
-    <div class="col-12">
-        <div class="chart-card">
-            <div class="chart-header">
-                <h5 class="mb-0">Actions Rapides</h5>
-            </div>
-            <div class="chart-body">
-                <div class="row g-3">
-                    <div class="col-md-3">
-                        <div class="d-grid">
-                            <button class="btn btn-custom">
-                                <i class="bi bi-plus-circle me-2"></i>
-                                Ajouter Formation
-                            </button>
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Total Users Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="bg-primary bg-gradient p-3 rounded-circle">
+                                <i class="bi bi-people text-white fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-title mb-1">Total Membres</h6>
+                            <h2 class="mb-0 fw-bold">{{ \App\Models\User::count() }}</h2>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="d-grid">
-                            <button class="btn btn-outline-custom">
-                                <i class="bi bi-people me-2"></i>
-                                Gérer Utilisateurs
-                            </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Products Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="bg-success bg-gradient p-3 rounded-circle">
+                                <i class="bi bi-box-seam text-white fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-title mb-1">Total Produits</h6>
+                            <h2 class="mb-0 fw-bold">{{ \App\Models\Product::count() }}</h2>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="d-grid">
-                            <button class="btn btn-outline-custom">
-                                <i class="bi bi-envelope me-2"></i>
-                                Envoyer Newsletter
-                            </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Events Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="bg-warning bg-gradient p-3 rounded-circle">
+                                <i class="bi bi-calendar-event text-white fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-title mb-1">Total Événements</h6>
+                            <h2 class="mb-0 fw-bold">{{ \App\Models\Evenement::count() }}</h2>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="d-grid">
-                            <button class="btn btn-outline-custom">
-                                <i class="bi bi-gear me-2"></i>
-                                Paramètres
-                            </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Formations Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="bg-info bg-gradient p-3 rounded-circle">
+                                <i class="bi bi-mortarboard text-white fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-title mb-1">Total Formations</h6>
+                            <h2 class="mb-0 fw-bold">{{ \App\Models\Formation::count() }}</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Charts Section -->
+    <div class="row g-4 mb-4">
+        <!-- Line Chart -->
+        <div class="col-xl-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Statistiques Mensuelles</h5>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateChart('users')">Membres</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateChart('products')">Produits</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateChart('events')">Événements</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyStats" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doughnut Chart -->
+        <div class="col-xl-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0">
+                    <h5 class="card-title mb-0">Répartition des Formations</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="formationDistribution" height="260"></canvas>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2" style="width: 12px; height: 12px;"></span>
+                                CyberSecurity
+                            </span>
+                            <span class="fw-bold">{{ \App\Models\Formation::where('category', 'CyberSecurity')->count() }} formations</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="d-flex align-items-center">
+                                <span class="badge bg-success me-2" style="width: 12px; height: 12px;"></span>
+                                Dev
+                            </span>
+                            <span class="fw-bold">{{ \App\Models\Formation::where('category', 'Dev')->count() }} formations</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="badge bg-warning me-2" style="width: 12px; height: 12px;"></span>
+                                AI
+                            </span>
+                            <span class="fw-bold">{{ \App\Models\Formation::where('category', 'AI')->count() }} formations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity and Quick Actions -->
+    <div class="row g-4">
+        <!-- Recent Activity -->
+        <div class="col-xl-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0">
+                    <h5 class="card-title mb-0">Activités Récentes</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(\App\Models\User::latest()->take(5)->get() as $user)
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-info">Nouveau Membre</span>
+                                    </td>
+                                    <td>{{ $user->name }} a rejoint la plateforme</td>
+                                    <td>{{ $user->created_at->diffForHumans() }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-xl-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0">
+                    <h5 class="card-title mb-0">Actions Rapides</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Ajouter un Produit
+                        </a>
+                        <a href="/evenements/create" class="btn btn-success">
+                            <i class="bi bi-calendar-plus me-2"></i>Créer un Événement
+                        </a>
+                        <a href="/formations/create" class="btn btn-info">
+                            <i class="bi bi-mortarboard me-2"></i>Ajouter une Formation
+                        </a>
+                        <a href="/members/create" class="btn btn-warning">
+                            <i class="bi bi-person-plus me-2"></i>Ajouter un Membre
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Animation pour les cartes de statistiques
-    const statsCards = document.querySelectorAll('.stats-card');
-    statsCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.5s ease';
-            
-            setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 100);
-        }, index * 100);
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-refresh dashboard data every 5 minutes
+        setInterval(function() {
+            location.reload();
+        }, 300000);
 
-    // Animation pour les barres de progression
-    const progressBars = document.querySelectorAll('.progress-bar-custom');
-    setTimeout(() => {
-        progressBars.forEach(bar => {
-            const width = bar.style.width;
-            bar.style.width = '0%';
-            setTimeout(() => {
-                bar.style.width = width;
-            }, 500);
+        // Monthly Statistics Line Chart
+        const monthlyStatsCtx = document.getElementById('monthlyStats').getContext('2d');
+        const monthlyStatsChart = new Chart(monthlyStatsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                datasets: [{
+                    label: 'Nouveaux Membres',
+                    data: [65, 59, 80, 81, 56, 55, 40, 45, 60, 75, 85, 90],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Évolution Mensuelle'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
-    }, 1000);
-});
-</script>
 
+        // Formation Distribution Doughnut Chart
+        const formationDistCtx = document.getElementById('formationDistribution').getContext('2d');
+        const formationDistChart = new Chart(formationDistCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['CyberSecurity', 'Dev', 'AI'],
+                datasets: [{
+                    data: [
+                        {{ \App\Models\Formation::where('category', 'CyberSecurity')->count() }},
+                        {{ \App\Models\Formation::where('category', 'Dev')->count() }},
+                        {{ \App\Models\Formation::where('category', 'AI')->count() }}
+                    ],
+                    backgroundColor: [
+                        'rgba(13, 110, 253, 0.8)',  // Bootstrap primary
+                        'rgba(25, 135, 84, 0.8)',   // Bootstrap success
+                        'rgba(255, 193, 7, 0.8)'    // Bootstrap warning
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((context.raw / total) * 100);
+                                return `${context.label}: ${context.raw} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // Function to update chart data
+        window.updateChart = function(dataType) {
+            let newData;
+            switch(dataType) {
+                case 'users':
+                    newData = [65, 59, 80, 81, 56, 55, 40, 45, 60, 75, 85, 90];
+                    monthlyStatsChart.data.datasets[0].label = 'Nouveaux Membres';
+                    monthlyStatsChart.data.datasets[0].borderColor = 'rgb(75, 192, 192)';
+                    break;
+                case 'products':
+                    newData = [30, 45, 35, 50, 40, 35, 45, 55, 50, 60, 70, 75];
+                    monthlyStatsChart.data.datasets[0].label = 'Nouveaux Produits';
+                    monthlyStatsChart.data.datasets[0].borderColor = 'rgb(255, 99, 132)';
+                    break;
+                case 'events':
+                    newData = [10, 15, 12, 18, 15, 20, 25, 22, 20, 25, 30, 28];
+                    monthlyStatsChart.data.datasets[0].label = 'Événements';
+                    monthlyStatsChart.data.datasets[0].borderColor = 'rgb(255, 205, 86)';
+                    break;
+            }
+            monthlyStatsChart.data.datasets[0].data = newData;
+            monthlyStatsChart.update();
+        }
+    });
+</script>
 @endsection

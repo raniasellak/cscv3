@@ -13,6 +13,7 @@ use App\Http\Controllers\MemberController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FormationController;
+use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\InscriptionController;
 use Illuminate\Support\Facades\Auth;
 

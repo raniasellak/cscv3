@@ -1,4 +1,4 @@
-<!-- master -->
+<!-- appdash -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -221,7 +221,7 @@
         
         /* Content Area */
         .content-area {
-            padding: 30px;
+            padding: 20px;
         }
         
         /* Responsive */
@@ -273,8 +273,8 @@
 </head>
 <body>
     <!-- Navbar -->
-    @include('partial.nav')   {{-- Nav principale --}}>
-
+    @include('partial.nav')   {{-- Nav principale --}}
+    @include('partial.flash') 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-content">
@@ -328,6 +328,12 @@
                 </a>
             </div>
             <div class="nav-item">
+                <a class="nav-link" href="/evenements/create">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="sidebar-text">Create Event</span>
+                </a>
+            </div>
+            <div class="nav-item">
                 <a class="nav-link" href="/members">
                     <i class="bi bi-geo-alt"></i>
                     <span class="sidebar-text">Gestion des membres</span>
@@ -369,46 +375,7 @@
 
     <!-- Main Content -->
     <div class="main-content" id="main-content">
-        <!-- Top Navigation -->
-        <div class="topbar">
-            <div class="d-flex align-items-center">
-                <input type="text" class="search-box" placeholder="Rechercher...">
-            </div>
-            
-            <div class="topbar-actions">
-                <div class="notification-icon">
-                    <i class="bi bi-envelope"></i>
-                </div>
-                <div class="notification-icon">
-                    <i class="bi bi-bell"></i>
-                    <span class="notification-badge">3</span>
-                </div>
-                <div class="notification-icon">
-                    <i class="bi bi-list-task"></i>
-                </div>
-                
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
-                        <div class="user-avatar me-2" style="width: 35px; height: 35px; font-size: 0.8rem;">
-                            {{ substr(Auth::user()->name, 0, 1) }}
-                        </div>
-                        <span class="text-dark">{{ Auth::user()->name }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-lg">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item text-danger" href="{{ route('logout') }}" 
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                               <i class="bi bi-box-arrow-right me-2"></i> Sign Out
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
+       
         <!-- Content Area -->
         <div class="content-area">
             <!-- Flash Messages -->
@@ -444,6 +411,8 @@
                 </div>
             @endif
 
+           
+
             @if($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <i class="bi bi-exclamation-triangle me-2"></i>
@@ -458,6 +427,7 @@
             @endif
 
             @yield('content')
+            @yield('main')
         </div>
     </div>
 
@@ -467,6 +437,8 @@
     </form>
     @include('partial.footer')  {{-- Footer --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    @yield('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');
