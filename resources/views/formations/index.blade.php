@@ -1,7 +1,6 @@
 
-@extends('user.layouts.app')
 
-@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.app')
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'layouts.master')
 
 
 @section('title')

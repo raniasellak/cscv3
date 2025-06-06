@@ -12,7 +12,7 @@ class FormationController extends Controller
     {
         $categories = ['CyberSecurity', 'AI', 'Dev'];  // Liste des catégories disponibles
         $category = $request->get('category');  // Récupérer la catégorie sélectionnée
-    
+
         // Si une catégorie est sélectionnée, on filtre les formations
         if ($category) {
             $formations = Formation::where('category', $category)->get();

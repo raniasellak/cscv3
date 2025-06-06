@@ -1,8 +1,9 @@
-@extends(view: 'layouts.appdash')
+@extends('layouts.appdash')
 
 @section('title')
 Modifier la formation
 @endsection
+
 
 @section('styles')
 <style>
