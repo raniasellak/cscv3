@@ -5,7 +5,7 @@
 <title>Attestation</title>
 <style>
   @page {
-      size: 800pt 500pt;
+      size: 900pt 550pt;
 
     margin: 0;
   }
@@ -112,7 +112,7 @@
       <div class="signatures">
         <div>
           <strong>Hatim</strong>
-          Présidente du club
+          Président(e) du club
         </div>
       </div>
     </div>

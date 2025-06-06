@@ -27,6 +27,7 @@
     <main>
         @yield('main') 
         @yield('content')
+        @include('chatbot.widget')
     </main>
    
     @include('partial.footer')
