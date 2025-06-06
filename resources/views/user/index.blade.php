@@ -220,27 +220,7 @@
   </div>
 </section>
 
-<!-- Section Newsletter -->
-<section class="newsletter-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center">
-        <h3 class="newsletter-title">Restez Informé</h3>
-        <p class="newsletter-description">Recevez les dernières actualités sur nos formations et événements</p>
-        
-        <form class="newsletter-form" action="#" method="POST">
-          @csrf
-          <div class="input-group">
-            <input type="email" class="form-control" placeholder="Votre adresse email" required>
-            <button class="btn btn-orange" type="submit">
-              <i class="fas fa-paper-plane me-1"></i>S'abonner
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+
 @endsection
 
 @section('styles')

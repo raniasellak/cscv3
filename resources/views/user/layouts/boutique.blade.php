@@ -92,6 +92,11 @@
         .cart-icon {
             position: relative;
             margin-right: 15px;
+            text-decoration: none !important;
+        }
+
+        .cart-icon::after {
+            display: none !important;
         }
 
         .cart-badge {
@@ -341,6 +346,9 @@
                     </li>
                     @endif
                     <li class="nav-item">
+                        <a class="nav-link" href="/evenements"><i class="fas fa-calendar-alt me-1"></i>Events</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/about"><i class="fas fa-users me-1"></i>À propos</a>
                     </li>
                     <li class="nav-item">
@@ -440,6 +448,7 @@
                             <ul>
                                 <li><a href="{{ route('user.index') }}">Accueil</a></li>
                                 <li><a href="/formations">Formations</a></li>
+                                <li><a href="/evenements">Events</a></li>
                                 <li><a href="{{ route('boutique.index') }}">Boutique</a></li>
                                 <li><a href="#">À propos</a></li>
                                 <li><a href="{{ route('contact.show') }}">Contact</a></li>
@@ -462,14 +471,15 @@
                     </div>
 
                     <!-- Colonne 4: Contact -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="footer-section">
+                    <!-- Colonne 4: Contact -->
+                   <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="footer-section"href="{{ route('contact.show') }}">
                             <h5>Contactez-nous</h5>
                             <div class="contact-info">
-                                <p><i class="fas fa-map-marker-alt"></i>123 Rue de la Formation, 75001 Paris</p>
-                                <p><i class="fas fa-phone"></i>+33 1 23 45 67 89</p>
-                                <p><i class="fas fa-envelope"></i>contact@monsite.fr</p>
-                                <p><i class="fas fa-clock"></i>Lun - Ven: 9h00 - 18h00</p>
+                                <p><i class="fas fa-map-marker-alt"></i>Faculté des Sciences et Techniques Marrakech</p>
+                                <p><i class="fas fa-phone"></i>05 06 01 23 45 69</p>
+                                <p><i class="fas fa-envelope"></i>cscclubfstg@gmail.com</p>
+                                
                             </div>
                         </div>
                     </div>
@@ -498,6 +508,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // Configuration CSRF pour les requêtes AJAX
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         // Animation d'apparition au scroll
         const observerOptions = {
             threshold: 0.1,
@@ -522,20 +539,61 @@
 
         // Fonction pour mettre à jour le compteur du panier
         function updateCartCount() {
-            // Ici vous pouvez ajouter votre logique pour récupérer le nombre d'articles
-            // Par exemple, via une requête AJAX ou depuis le localStorage
             fetch('/cart/count')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('cart-count').textContent = data.count || 0;
+                    const cartCountElement = document.getElementById('cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = data.count || 0;
+                    }
                 })
                 .catch(error => {
                     console.log('Erreur lors de la récupération du compteur panier:', error);
+                    // Fallback : récupérer depuis le localStorage
+                    const cartCount = localStorage.getItem('cart_count') || 0;
+                    const cartCountElement = document.getElementById('cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = cartCount;
+                    }
                 });
         }
 
+        // Fonction pour incrémenter le compteur du panier
+        function incrementCartCount() {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                let currentCount = parseInt(cartCountElement.textContent) || 0;
+                currentCount++;
+                cartCountElement.textContent = currentCount;
+                
+                // Sauvegarder dans localStorage comme backup
+                localStorage.setItem('cart_count', currentCount);
+                
+                // Animation de pulsation
+                cartCountElement.style.animation = 'none';
+                setTimeout(() => {
+                    cartCountElement.style.animation = 'pulse 0.5s ease-in-out';
+                }, 10);
+            }
+        }
+
         // Mettre à jour le compteur au chargement de la page
-        document.addEventListener('DOMContentLoaded', updateCartCount);
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            
+            // Écouter les événements personnalisés pour la mise à jour du panier
+            document.addEventListener('cartUpdated', function() {
+                updateCartCount();
+            });
+            
+            document.addEventListener('cartItemAdded', function() {
+                incrementCartCount();
+            });
+        });
+
+        // Fonction globale disponible pour d'autres scripts
+        window.updateCartCount = updateCartCount;
+        window.incrementCartCount = incrementCartCount;
     </script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 
 
-@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'layouts.master')
+
+@extends(auth()->user()?->role === 'admin' ? 'layouts.appdash' : 'user.layouts.boutique')
+
 
 @section('content')
 <style>
