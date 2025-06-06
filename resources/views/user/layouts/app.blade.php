@@ -433,13 +433,13 @@
 
                     <!-- Colonne 4: Contact -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="footer-section">
+                        <div class="footer-section"href="{{ route('contact.show') }}">
                             <h5>Contactez-nous</h5>
                             <div class="contact-info">
-                                <p><i class="fas fa-map-marker-alt"></i>123 Rue de la Formation, 75001 Paris</p>
-                                <p><i class="fas fa-phone"></i>+33 1 23 45 67 89</p>
-                                <p><i class="fas fa-envelope"></i>contact@monsite.fr</p>
-                                <p><i class="fas fa-clock"></i>Lun - Ven: 9h00 - 18h00</p>
+                                <p><i class="fas fa-map-marker-alt">Faculté  des  Scienceset  Tachnique  Marrakech</i></p>
+                                <p><i class="fas fa-phone"></i>05 06 01 23 45 69</p>
+                                <p><i class="fas fa-envelope"></i>cscclubfstg@gmail.com</p>
+                                
                             </div>
                         </div>
                     </div>

@@ -193,3 +193,7 @@ Route::get('/reset-password/{token}', [PasswordResetController::class, 'showRese
     
 Route::post('/reset-password', [PasswordResetController::class, 'reset'])
     ->name('password.update');
+
+
+Route::post('/payment/paypal/success', [PaymentController::class, 'paypalSuccess']);
+Route::post('/webhooks/paypal', [PaymentController::class, 'handlePaypalWebhook']);

@@ -1,3 +1,5 @@
+
+
 @extends('layouts.master')
 
 @section('title', 'Accueil - CSC Formation & Événements')
@@ -10,7 +12,7 @@
         <div class="row h-100 align-items-center">
             <div class="col-lg-8 mx-auto text-center text-white">
                 <h1 class="display-3 fw-bold mb-4 hero-title">
-                    Bienvenue au <span class="text-orange">CSC</span>
+                    Bienvenue au <span class="text-orange">Computer Science Club</span>
                 </h1>
                 <p class="lead mb-5 hero-subtitle">
                     Centre de formation et d'événements spécialisé en cybersécurité, intelligence artificielle et développement
@@ -349,54 +351,227 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 140, 0, 0.3);
         }
+.hero-section {
+    background: linear-gradient(135deg, 
+                    rgba(10, 15, 35, 0.95) 0%,
+                    rgba(15, 25, 50, 0.90) 25%,
+                    rgba(20, 35, 65, 0.85) 50%,
+                    rgba(25, 45, 80, 0.80) 75%,
+                    rgba(30, 55, 95, 0.75) 100%),
+                url('{{ asset("images/event.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.8)),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+/* Alternative avec un dégradé très sombre */
+.hero-section-alt {
+    background: linear-gradient(135deg, 
+                    rgba(5, 10, 25, 0.95) 0%,
+                    rgba(10, 20, 40, 0.90) 30%,
+                    rgba(15, 30, 55, 0.85) 60%,
+                    rgba(20, 40, 70, 0.80) 100%),
+                url('{{ asset("images/event.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(255, 140, 0, 0.1) 0%, transparent 50%);
-        }
+/* Version avec effet de vignette très sombre pour plus de profondeur */
+.hero-section-vignette {
+    background: 
+        radial-gradient(ellipse at center, 
+                       rgba(8, 15, 30, 0.4) 0%,
+                       rgba(3, 8, 20, 0.95) 100%),
+        linear-gradient(135deg, 
+                       rgba(5, 12, 28, 0.90) 0%,
+                       rgba(12, 22, 45, 0.85) 50%,
+                       rgba(18, 32, 60, 0.80) 100%),
+        url('{{ asset("images/event.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
+/* Version ultra-dark pour un effet dramatique */
+.hero-section-ultra-dark {
+    background: linear-gradient(135deg, 
+                    rgba(0, 5, 15, 0.98) 0%,
+                    rgba(5, 10, 25, 0.95) 25%,
+                    rgba(8, 15, 35, 0.92) 50%,
+                    rgba(12, 20, 45, 0.88) 75%,
+                    rgba(15, 25, 55, 0.85) 100%),
+                url('{{ asset("images/event.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
-        }
+/* Boutons avec dégradés orange et beige */
+.btn {
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            color: rgba(255, 255, 255, 0.9);
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
 
-        .hero-buttons {
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, 
+                              #ff8c00 0%,
+                              #ff7f00 25%,
+                              #ff6b00 50%,
+                              #e55a00 75%,
+                              #cc4f00 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 140, 0, 0.4);
+    background: linear-gradient(135deg, 
+                              #ff9500 0%,
+                              #ff8c00 25%,
+                              #ff7f00 50%,
+                              #ff6b00 75%,
+                              #e55a00 100%);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, 
+                              #f5deb3 0%,
+                              #ddb892 25%,
+                              #d2b48c 50%,
+                              #c19a6b 75%,
+                              #a0826d 100%);
+    color: #2c1810;
+    box-shadow: 0 8px 25px rgba(245, 222, 179, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(245, 222, 179, 0.4);
+    background: linear-gradient(135deg, 
+                              #f5e6d3 0%,
+                              #e6c7a2 25%,
+                              #ddb892 50%,
+                              #d2b48c 75%,
+                              #c19a6b 100%);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes lightPulse {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes sparkleFloat {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translateY(0px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+}
+        
 
         .floating-shapes {
             position: absolute;

@@ -358,6 +358,26 @@
         background: linear-gradient(45deg, #dc3545, #c82333);
         color: white;
     }
+
+    .paypal-info {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: rgba(0, 112, 186, 0.1);
+        border-radius: 10px;
+        border-left: 4px solid #0070BA;
+    }
+
+    .paypal-info p {
+        color: #0070BA;
+        font-size: 1rem;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    #paypal-button-container {
+        margin-top: 15px;
+    }
     
     @media (max-width: 768px) {
         .payment-left {
@@ -478,8 +498,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <script src="https://js.stripe.com/v3/"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+<!-- Intégration PayPal SDK avec votre client-id -->
+<script src="https://www.paypal.com/sdk/js?client-id=AapVvNb926stIlfXRd0rXrjreCuVxga_oehzEbdw6jBj866IBiN12rnC9JgghHmQwuEC7dlDv0MHzyAv&currency=EUR"></script>
+
 <script>
+// Variable globale pour le montant total
+const totalAmount = {{ $cart->products->sum(fn($p) => $p->price * $p->pivot->quantity) }};
+
 document.getElementById('btn-card').onclick = function() {
     document.getElementById('payment-method').innerHTML = `
         <div class="payment-form">
@@ -521,34 +546,56 @@ document.getElementById('btn-card').onclick = function() {
 document.getElementById('btn-paypal').onclick = function() {
     document.getElementById('payment-method').innerHTML = `
         <div class="payment-form">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <p style="color: #666; font-size: 1rem;">
+            <div class="paypal-info">
+                <p>
                     <i class="fas fa-info-circle me-2"></i>
-                    Vous allez être redirigé vers PayPal pour finaliser votre paiement
+                    Vous allez être redirigé vers PayPal pour finaliser votre paiement sécurisé
                 </p>
             </div>
             <div id="paypal-button-container"></div>
         </div>
     `;
     
+    // Rendu des boutons PayPal avec votre configuration
     paypal.Buttons({
         createOrder: function(data, actions) {
             return actions.order.create({
-                purchase_units: [{ 
-                    amount: { value: '{{ $cart->products->sum(fn($p) => $p->price * $p->pivot->quantity) }}' }
+                purchase_units: [{
+                    amount: {
+                        value: totalAmount.toFixed(2),
+                        currency_code: 'EUR'
+                    },
+                    description: 'Commande sur votre site'
                 }]
             });
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                alert('Paiement PayPal fictif (à implémenter côté serveur)');
+                // Affichage de confirmation
+                alert('Transaction complétée par ' + details.payer.name.given_name);
+                
+                // Ici vous pouvez ajouter une redirection vers une page de confirmation
+                // ou envoyer les détails de la transaction à votre serveur
+                console.log('Détails de la transaction:', details);
+                
+                // Exemple de redirection vers une page de succès
+                // window.location.href = '/payment/success?transaction_id=' + details.id;
             });
+        },
+        onError: function(err) {
+            console.error('Erreur PayPal:', err);
+            alert('Une erreur s\'est produite lors du paiement. Veuillez réessayer.');
+        },
+        onCancel: function(data) {
+            console.log('Transaction annulée:', data);
+            alert('Transaction annulée.');
         },
         style: {
             color: 'blue',
             shape: 'rect',
             height: 50,
-            label: 'paypal'
+            label: 'paypal',
+            layout: 'vertical'
         }
     }).render('#paypal-button-container');
 };
